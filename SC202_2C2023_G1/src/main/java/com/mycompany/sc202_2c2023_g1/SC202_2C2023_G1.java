@@ -2,6 +2,7 @@ package com.mycompany.sc202_2c2023_g1;
 
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
+import java.awt.Image;
 
 public class SC202_2C2023_G1 {
 
@@ -20,10 +21,14 @@ public class SC202_2C2023_G1 {
                 "</ul></div></body></html>";
             
             String iconoBarberia  = "C:/Users/corde/Documents/NetBeansProjects/SC202_2C2023_G1/SC202_2C2023_G1/src/main/java/Objetos/Barber.jpg";
-            ImageIcon icono = new ImageIcon(iconoBarberia);
+            ImageIcon iconoOriginal = new ImageIcon(iconoBarberia);
+            // Ajustar el ancho de la imagen al valor deseado
+            int nuevoAncho = 200; // Ancho deseado
+            int nuevoAlto = -1; // Mantener la relación de aspecto original
+            Image imagenEscalada = iconoOriginal.getImage().getScaledInstance(nuevoAncho, nuevoAlto, Image.SCALE_SMOOTH);
+            ImageIcon iconoAjustado = new ImageIcon(imagenEscalada);
             
-            
-            String opcion =  (String) JOptionPane.showInputDialog(null, mensaje, "Menú Principal", JOptionPane.PLAIN_MESSAGE , icono , null , null);
+            String opcion =  (String) JOptionPane.showInputDialog(null, mensaje, "Menú Principal", JOptionPane.PLAIN_MESSAGE , iconoAjustado , null , null);
             if (opcion == null) {
                 // Si se presiona el botón de cerrar o cancelar, se termina el ciclo
                 break;
