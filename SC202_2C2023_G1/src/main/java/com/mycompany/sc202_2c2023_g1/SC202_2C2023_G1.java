@@ -7,7 +7,7 @@ public class SC202_2C2023_G1 {
     public static void main(String[] args) {
         boolean repetir = true;
         while (repetir) {
-            String opcion = JOptionPane.showInputDialog("---Menu Parqueo---\n"
+            String opcion = JOptionPane.showInputDialog("---Menu Barberia---\n"
                     + "1.Opcion #1     \n"
                     + "2.Opcion #2     \n"
                     + "3.Opcion #3     \n");
