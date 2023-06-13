@@ -9,6 +9,9 @@ package Objetos;
  * @author eria
  */
 public class Barbero {
+
+    public Barbero(int id1, String Cedula1, String Nombre1, String Apellidos1, String Telefono1, int HoraAlmuerzo1) {
+    }
     public int id;
     public String Cedula;
     public String Nombre;
