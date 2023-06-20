@@ -109,6 +109,19 @@ public class Barbero {
         JOptionPane.showMessageDialog(null, mensajeError);
     }
 
+    private static void mostrarMensajeExitoEliminacion() {
+        String mensajeExitoEliminacion = "<html><body style='width: 250px; font-family: Arial, sans-serif;'>"
+                + "<h1 style='text-align: center; margin-top: 10px;'>Menú BarberShop</h1>"
+                + "<hr style='border-top: 2px solid #ccc;'>"
+                + "<div style='display: flex; justify-content: center;'>"
+                + "<div style='background-color: #e6f4e6; padding: 20px; border-radius: 5px;'>"
+                + "<h3 style='text-align: center; margin-top: 10px; color: #4CAF50;'>Eliminación exitosa</h3>"
+                + "<p style='text-align: center; margin-top: 10px; color: #333;'>¡El barbero se ha eliminado correctamente!</p>"
+                + "<div style='display: flex; justify-content: center;'>"
+                + "</div></div></div></body></html>";
+        JOptionPane.showMessageDialog(null, mensajeExitoEliminacion);
+    }
+
     private static void mostrarMensajeDatosBarbero(Barbero barbero) {
         String mensajeDatosBarbero = "<html><body style='width: 250px; font-family: Arial, sans-serif;'>"
                 + "<h1 style='text-align: center; margin-top: 10px;'>Datos del Barbero</h1>"
@@ -129,7 +142,7 @@ public class Barbero {
     public static void CrearBarbero(int id, String cedula, String nombre, String apellidos, String telefono, String horaAlmuerzoInicio, String horaAlmuerzoFinal) {
         if (posicion >= 5) {
             mostrarMensajeError();
-            return; // Salir del método si se alcanzó el límite máximo
+            return;
         }
         Barbero nuevoBarbero = new Barbero();
         nuevoBarbero.setid(id);
@@ -149,7 +162,6 @@ public class Barbero {
     }
 
     public static void mostrarBarberos() {
-
         String barberosInfo = "";
         for (int i = 0; i < barberoArray.length; i++) {
             Barbero barbero = barberoArray[i];
@@ -169,11 +181,66 @@ public class Barbero {
                 + "<hr style='border-top: 2px solid #ccc;'>"
                 + "<div style='display: flex; justify-content: center;'>"
                 + "<div style='background-color: #e6f4e6; padding: 20px; border-radius: 5px;'>"
-                + "<p style='text-align: left; margin-top: 10px;'>" + barberosInfo + "</p>"
+                + "<p style='text-align: left; margin-top: 10px;'>"
+                + barberosInfo
+                + "</p>"
                 + "</div></div></body></html>";
 
         JOptionPane.showMessageDialog(null, mensaje);
 
+    }
+
+    public static void eliminarBarbero(String cedula) {
+        boolean cedulaEncontrada = false;
+
+        for (int i = 0; i < barberoArray.length; i++) {
+            if (barberoArray[i] != null && barberoArray[i].getCedula().equals(cedula)) {
+                barberoArray[i] = null;
+                cedulaEncontrada = true;
+                mostrarMensajeExitoEliminacion();
+                break;
+            }
+        }
+
+        if (!cedulaEncontrada) {
+            JOptionPane.showMessageDialog(null, "Error: No se encontro la cedula.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    public static void actualizarBarbero(int id, String cedula, String nombre, String apellidos, String telefono, String horaAlmuerzoInicio, String horaAlmuerzoFinal ,String cedulavieja) {
+        boolean cedulaEncontrada = false;
+
+        for (int i = 0; i < barberoArray.length; i++) {
+            if (barberoArray[i] != null && barberoArray[i].getCedula().equals(cedulavieja)) {
+                Barbero nuevoBarbero = new Barbero();
+                int idvieja = barberoArray[i].getid();
+                nuevoBarbero.setid(idvieja);
+                nuevoBarbero.setNombre(nombre);
+                nuevoBarbero.setApellidos(apellidos);
+                nuevoBarbero.setCedula(cedula);
+                nuevoBarbero.setTelefono(telefono);
+                nuevoBarbero.setHoraAlmuerzoInicio(horaAlmuerzoInicio);
+                nuevoBarbero.setHoraAlmuerzoFinal(horaAlmuerzoFinal);
+                
+                
+                cedulaEncontrada = true;
+                barberoArray[i] =nuevoBarbero ;
+                break;
+            }
+        }
+
+        if (!cedulaEncontrada) {
+            JOptionPane.showMessageDialog(null, "Error: No se encontro la cedula.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    public static boolean hayBarberosAgregados() {
+        for (Barbero barbero : barberoArray) {
+            if (barbero != null) {
+                return true;
+            }
+        }
+        return false;
     }
 
 }
