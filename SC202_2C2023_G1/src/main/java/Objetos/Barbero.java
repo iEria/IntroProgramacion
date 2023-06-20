@@ -12,6 +12,10 @@ import javax.swing.JOptionPane;
  */
 public class Barbero {
 
+    public static boolean hayClientesAgregados() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
     public int id;
     public String Cedula;
     public String Nombre;
