@@ -229,9 +229,8 @@ public class SC202_2C2023_G1 {
                     + "<ul style='list-style-type: none; padding: 0; text-align: left;'>"
                     + "<li style='margin-bottom: 10px;'><strong>Opción 1:</strong> Agregar Reservacion </li>"
                     + "<li style='margin-bottom: 10px;'><strong>Opción 2:</strong> Mostrar Reservaciones </li>"
-                    + "<li style='margin-bottom: 10px;'><strong>Opción 3:</strong> Opcion3</li>"
-                    + "<li style='margin-bottom: 10px;'><strong>Opción 4:</strong> Opcion4</li>"
-                    + "<li style='margin-bottom: 10px;'><strong>Opción 5:</strong> Atras </li>"
+                    + "<li style='margin-bottom: 10px;'><strong>Opción 3:</strong> Eliminar Reservaciones</li>"
+                    + "<li style='margin-bottom: 10px;'><strong>Opción 4:</strong> Atras </li>"
                     + "</ul></div></body></html>";
 
             String iconoBarberia = "C:/Users/corde/Documents/NetBeansProjects/SC202_2C2023_G1/SC202_2C2023_G1/src/main/java/Objetos/Barber.jpg";
@@ -291,7 +290,23 @@ public class SC202_2C2023_G1 {
                         }
 
                         break;
-                    case "5":
+                    case "3":
+                        if (ReservacionClientes.hayClientesAgregados()) {
+                            String mensajeCedulaEliminar = "<html><body style='width: 250px; font-family: Arial, sans-serif;'>" + "<h1 style='text-align: center; margin-top: 10px;'>Menú BarberShop</h1>" + "<hr style='border-top: 2px solid #ccc;'>" + "<div style='display: flex; justify-content: center;'>" + "<ul style='list-style-type: none; padding: 0; text-align: left;'>" + "<li style='margin-bottom: 10px;'>Ingrese la cedula del cliente que desea eliminar la reservacion</li>" + "</ul></div></body></html>";
+                            String mensajeListaReservaciones = "<html><body style='width: 250px; font-family: Arial, sans-serif;'>" + "<h1 style='text-align: center; margin-top: 10px;'>Menú BarberShop</h1>" + "<hr style='border-top: 2px solid #ccc;'>" + "<div style='display: flex; justify-content: center;'>" + "<div style='background-color: #f2f2f2; padding: 20px; border-radius: 5px;'>" + "<h3 style='text-align: center; margin-top: 10px; color: #333;'>Se le mostrará la lista de las Reservaciones</h3>" + "<p style='text-align: center; margin-top: 10px; color: #333;'>Por favor, tome nota de la cédula del cliente que desea eliminar la reservacion.</p>" + "<div style='display: flex; justify-content: center;'>" + "<ul style='list-style-type: none; padding: 0; text-align: left;'>";
+                            JOptionPane.showMessageDialog(null, mensajeListaReservaciones);
+                            ReservacionClientes.mostrarReservacionClientes();
+                            String cedula = (String) JOptionPane.showInputDialog(null, mensajeCedulaEliminar, "Menú Administracion Personal - Nuevo Barbero", JOptionPane.PLAIN_MESSAGE, null, null, null);
+                            if (cedula == null) {
+                                JOptionPane.showMessageDialog(null, "Error: El campo es obligatorio.", "Error", JOptionPane.ERROR_MESSAGE);
+                            }
+
+                            ReservacionClientes.eliminarReservacion(cedula);
+                        } else {
+                            JOptionPane.showMessageDialog(null, "Error: No hay barberos agregados.", "Error", JOptionPane.ERROR_MESSAGE);
+                        }
+                        break;
+                    case "4":
                         repetir = false;
                         break;
                     default:

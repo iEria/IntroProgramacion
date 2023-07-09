@@ -108,6 +108,19 @@ public class ReservacionClientes {
                 + "</div></div></div></body></html>";
         JOptionPane.showMessageDialog(null, mensajeExito);
     }
+    
+    private static void mostrarMensajeExitoEliminacion() {
+        String mensajeExitoEliminacion = "<html><body style='width: 250px; font-family: Arial, sans-serif;'>"
+                + "<h1 style='text-align: center; margin-top: 10px;'>Menú BarberShop</h1>"
+                + "<hr style='border-top: 2px solid #ccc;'>"
+                + "<div style='display: flex; justify-content: center;'>"
+                + "<div style='background-color: #e6f4e6; padding: 20px; border-radius: 5px;'>"
+                + "<h3 style='text-align: center; margin-top: 10px; color: #4CAF50;'>Eliminación exitosa</h3>"
+                + "<p style='text-align: center; margin-top: 10px; color: #333;'>¡La reservacion del cliente se elimino correctamente!</p>"
+                + "<div style='display: flex; justify-content: center;'>"
+                + "</div></div></div></body></html>";
+        JOptionPane.showMessageDialog(null, mensajeExitoEliminacion);
+    }
 
     private static void mostrarMensajeDatosReservacionClientes(ReservacionClientes reservacionclientes) {
         String mensajeDatosReservacionClientes = "<html><body style='width: 250px; font-family: Arial, sans-serif;'>"
@@ -176,6 +189,24 @@ public class ReservacionClientes {
         JOptionPane.showMessageDialog(null, mensaje);
 
     }
+      public static void eliminarReservacion(String cedula) {
+        boolean cedulaEncontrada = false;
+
+        for (int i = 0; i < ReservacionClientesArray.length; i++) {
+            if (ReservacionClientesArray[i] != null && ReservacionClientesArray[i].getCedulaCliente().equals(cedula)) {
+                ReservacionClientesArray[i] = null;
+                cedulaEncontrada = true;
+                mostrarMensajeExitoEliminacion();
+                break;
+            }
+        }
+
+        if (!cedulaEncontrada) {
+            JOptionPane.showMessageDialog(null, "Error: No se encontro la cedula.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+      
+      
       public static boolean hayClientesAgregados() {
         for (ReservacionClientes reservacionclientes : ReservacionClientesArray) {
             if (reservacionclientes != null) {
