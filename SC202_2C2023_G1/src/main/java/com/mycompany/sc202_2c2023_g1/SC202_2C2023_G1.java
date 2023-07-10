@@ -51,7 +51,7 @@ public class SC202_2C2023_G1 {
                         JOptionPane.showMessageDialog(null, "Opcion #3");
                         break;
                     case "5":
-                            repetir = false;
+                        repetir = false;
                         break;
                     default:
                         JOptionPane.showMessageDialog(null, "No es una opción válida, reintente");
@@ -188,7 +188,28 @@ public class SC202_2C2023_G1 {
                         break;
                     case "2":
                         if (ReservacionClientes.hayClientesAgregados(ReservacionClientesArray)) {
-                            ReservacionClientes.mostrarReservacionClientes(ReservacionClientesArray);
+                            String mensaje2 = "<html><body style='width: 250px; font-family: Arial, sans-serif;'>" + "<h1 style='text-align: center; margin-top: 10px;'>Menú BarberShop</h1>" + "<hr style='border-top: 2px solid #ccc;'>" + "<div style='display: flex; justify-content: center;'>" + "<ul style='list-style-type: none; padding: 0; text-align: left;'>" + "<li style='margin-bottom: 10px;'><strong>Opción 1:</strong> Mostrar Reservacion segun dia </li>" + "<li style='margin-bottom: 10px;'><strong>Opción 2:</strong> Mostrar todas las Reservaciones </li>" + "</ul></div></body></html>";
+
+                            String opcion2 = (String) JOptionPane.showInputDialog(null, mensaje2, "Menú Reservación de espacios", JOptionPane.PLAIN_MESSAGE, iconoAjustado, null, null);
+                            if (ValidacionNumero(opcion)) {
+
+                                switch (opcion2) {
+                                    case "1":
+                                        String DiaCita = (String) JOptionPane.showInputDialog(null, "Ingrese el dia con el formato (dd/mm/yyyy) de las citas que quiere mostrar", "Menú Reservación de espacios - Mostar Reservacion", JOptionPane.PLAIN_MESSAGE, null, null, null);
+                                        ReservacionClientes.mostrarReservacionClientesPorDia(ReservacionClientesArray, DiaCita);
+                                        break;
+                                    case "2":
+                                        ReservacionClientes.mostrarReservacionClientes(ReservacionClientesArray);
+                                        break;
+
+                                    default:
+                                        JOptionPane.showMessageDialog(null, "No es una opción válida, reintente");
+
+                                }
+                            } else {
+                                JOptionPane.showMessageDialog(null, "No es un número, reintente");
+                            }
+
                         } else {
                             JOptionPane.showMessageDialog(null, "Error: No hay Reservaciones.", "Error", JOptionPane.ERROR_MESSAGE);
                         }
@@ -199,7 +220,8 @@ public class SC202_2C2023_G1 {
                             String mensajeCedulaEliminar = "<html><body style='width: 250px; font-family: Arial, sans-serif;'>" + "<h1 style='text-align: center; margin-top: 10px;'>Menú BarberShop</h1>" + "<hr style='border-top: 2px solid #ccc;'>" + "<div style='display: flex; justify-content: center;'>" + "<ul style='list-style-type: none; padding: 0; text-align: left;'>" + "<li style='margin-bottom: 10px;'>Ingrese la cedula del cliente que desea eliminar la reservacion</li>" + "</ul></div></body></html>";
                             String mensajeListaReservaciones = "<html><body style='width: 250px; font-family: Arial, sans-serif;'>" + "<h1 style='text-align: center; margin-top: 10px;'>Menú BarberShop</h1>" + "<hr style='border-top: 2px solid #ccc;'>" + "<div style='display: flex; justify-content: center;'>" + "<div style='background-color: #f2f2f2; padding: 20px; border-radius: 5px;'>" + "<h3 style='text-align: center; margin-top: 10px; color: #333;'>Se le mostrará la lista de las Reservaciones</h3>" + "<p style='text-align: center; margin-top: 10px; color: #333;'>Por favor, tome nota de la cédula del cliente que desea eliminar la reservacion.</p>" + "<div style='display: flex; justify-content: center;'>" + "<ul style='list-style-type: none; padding: 0; text-align: left;'>";
                             JOptionPane.showMessageDialog(null, mensajeListaReservaciones);
-                            ReservacionClientes.mostrarReservacionClientes(ReservacionClientesArray);
+                            String DiaCita = (String) JOptionPane.showInputDialog(null, "Ingrese el dia con el formato (dd/mm/yyyy) de las citas que quiere mostrar", "Menú Reservación de espacios - Mostar Reservacion", JOptionPane.PLAIN_MESSAGE, null, null, null);
+                            ReservacionClientes.mostrarReservacionClientesPorDia(ReservacionClientesArray, DiaCita);
                             String cedula = (String) JOptionPane.showInputDialog(null, mensajeCedulaEliminar, "Menú Administracion Personal - Nuevo Barbero", JOptionPane.PLAIN_MESSAGE, null, null, null);
                             if (cedula == null) {
                                 JOptionPane.showMessageDialog(null, "Error: El campo es obligatorio.", "Error", JOptionPane.ERROR_MESSAGE);

@@ -4,14 +4,18 @@
  */
 package Objetos;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.YearMonth;
+import java.util.Calendar;
+import java.util.Date;
 import javax.swing.JOptionPane;
 
 /**
  *
- * @author XPC
+ * @author eria
  */
 public class ReservacionClientes {
 
@@ -143,13 +147,14 @@ public class ReservacionClientes {
     }
 
     public static void CrearReservacionClientes(ReservacionClientes[] ReservacionClientesArray) {
+        String formatoFecha = "dd/MM/yyyy";
         int IDReservacionClientes = 0;
         boolean comenzar = true;
         String mensajeNombreCliente = "<html><body style='width: 250px; font-family: Arial, sans-serif;'>" + "<h1 style='text-align: center; margin-top: 10px;'>Menú BarberShop</h1>" + "<hr style='border-top: 2px solid #ccc;'>" + "<div style='display: flex; justify-content: center;'>" + "<ul style='list-style-type: none; padding: 0; text-align: left;'>" + "<li style='margin-bottom: 10px;'>Ingrese el nombre del cliente </li>" + "</ul></div></body></html>";
         String mensajeCedulaCliente = "<html><body style='width: 250px; font-family: Arial, sans-serif;'>" + "<h1 style='text-align: center; margin-top: 10px;'>Menú BarberShop</h1>" + "<hr style='border-top: 2px solid #ccc;'>" + "<div style='display: flex; justify-content: center;'>" + "<ul style='list-style-type: none; padding: 0; text-align: left;'>" + "<li style='margin-bottom: 10px;'>Ingrese la cedula del cliente </li>" + "</ul></div></body></html>";
         String mensajeApellidosCliente = "<html><body style='width: 250px; font-family: Arial, sans-serif;'>" + "<h1 style='text-align: center; margin-top: 10px;'>Menú BarberShop</h1>" + "<hr style='border-top: 2px solid #ccc;'>" + "<div style='display: flex; justify-content: center;'>" + "<ul style='list-style-type: none; padding: 0; text-align: left;'>" + "<li style='margin-bottom: 10px;'>Ingrese el apellido del cliente </li>" + "</ul></div></body></html>";
         String mensajeTelefonoCliente = "<html><body style='width: 250px; font-family: Arial, sans-serif;'>" + "<h1 style='text-align: center; margin-top: 10px;'>Menú BarberShop</h1>" + "<hr style='border-top: 2px solid #ccc;'>" + "<div style='display: flex; justify-content: center;'>" + "<ul style='list-style-type: none; padding: 0; text-align: left;'>" + "<li style='margin-bottom: 10px;'>Ingrese el telefono del cliente </li>" + "</ul></div></body></html>";
-        String mensajeDiaCita = "<html><body style='width: 250px; font-family: Arial, sans-serif;'>" + "<h1 style='text-align: center; margin-top: 10px;'>Menú BarberShop</h1>" + "<hr style='border-top: 2px solid #ccc;'>" + "<div style='display: flex; justify-content: center;'>" + "<ul style='list-style-type: none; padding: 0; text-align: left;'>" + "<li style='margin-bottom: 10px;'>Ingrese el dia de la cita </li>" + "</ul></div></body></html>";
+        String mensajeDiaCita = "<html><body style='width: 250px; font-family: Arial, sans-serif;'>" + "<h1 style='text-align: center; margin-top: 10px;'>Menú BarberShop</h1>" + "<hr style='border-top: 2px solid #ccc;'>" + "<div style='display: flex; justify-content: center;'>" + "<ul style='list-style-type: none; padding: 0; text-align: left;'>" + "<li style='margin-bottom: 10px;'>Ingrese el dia de la cita segun el formato (dd/MM/yyyy)</li>" + "</ul></div></body></html>";
         while (comenzar) {
             String NombreCliente = (String) JOptionPane.showInputDialog(null, mensajeNombreCliente, "Menú Reservación de espacios - Agregar Reservacion", JOptionPane.PLAIN_MESSAGE, null, null, null);
             String ApellidosCliente = (String) JOptionPane.showInputDialog(null, mensajeApellidosCliente, "Menú Reservación de espacios - Agregar Reservacion", JOptionPane.PLAIN_MESSAGE, null, null, null);
@@ -157,6 +162,20 @@ public class ReservacionClientes {
             String TelefonoCliente = (String) JOptionPane.showInputDialog(null, mensajeTelefonoCliente, "Menú Reservación de espacios - Agregar Reservacion", JOptionPane.PLAIN_MESSAGE, null, null, null);
             MostrarCalendario();
             String DiaCita = (String) JOptionPane.showInputDialog(null, mensajeDiaCita, "Menú Reservación de espacios - Agregar Reservacion", JOptionPane.PLAIN_MESSAGE, null, null, null);
+            boolean esFechaValida = validarFecha(DiaCita, formatoFecha);
+            if (!esFechaValida) {
+                String mensajeError = "<html><body style='width: 250px; font-family: Arial, sans-serif;'>"
+                        + "<h1 style='text-align: center; margin-top: 10px;'>Menú BarberShop</h1>"
+                        + "<hr style='border-top: 2px solid #ccc;'>"
+                        + "<div style='display: flex; justify-content: center;'>"
+                        + "<div style='background-color: #f4e6e6; padding: 20px; border-radius: 5px;'>"
+                        + "<h3 style='text-align: center; margin-top: 10px; color: #FF0000;'>Error en el registro</h3>"
+                        + "<p style='text-align: center; margin-top: 10px; color: #333;'>La fecha tiene el formato incorrecto o ingreso un mes actual del que estamos.</p>"
+                        + "<div style='display: flex; justify-content: center;'>"
+                        + "</div></div></div></body></html>";
+                JOptionPane.showMessageDialog(null, mensajeError);
+                return;
+            }
 
             String[] options = {"8:00 AM", "9:00 AM", "10:00 AM", "11:00 AM", "12:00 MD", "1:00 PM", "2:00 PM", "3:00 PM", "4:00 PM", "5:00 PM", "6:00 PM"};
 
@@ -177,7 +196,7 @@ public class ReservacionClientes {
             String horaFinalSeleccionada = opcionesHoraFinal[indiceHoraFinal];
 
             boolean campoInvalido = NombreCliente.isEmpty() || CedulaCliente.isEmpty() || ApellidosCliente.isEmpty() || TelefonoCliente.isEmpty()
-                     || DiaCita.isEmpty();
+                    || DiaCita.isEmpty();
 
             if (!campoInvalido) {
 
@@ -236,6 +255,35 @@ public class ReservacionClientes {
 
         JOptionPane.showMessageDialog(null, mensaje);
 
+    }
+    
+    public static void mostrarReservacionClientesPorDia(ReservacionClientes[] ReservacionClientesArray, String diaCita) {
+        String reservacionClientesInfo = "";
+        for (int i = 0; i < ReservacionClientesArray.length; i++) {
+            ReservacionClientes reservacionClientes = ReservacionClientesArray[i];
+            if (reservacionClientes != null && reservacionClientes.getDiaCita().equals(diaCita)) {
+                reservacionClientesInfo += "Nombre: " + reservacionClientes.getNombreCliente() + "<br>";
+                reservacionClientesInfo += "Apellidos: " + reservacionClientes.getApellidosCliente() + "<br>";
+                reservacionClientesInfo += "Cédula: " + reservacionClientes.getCedulaCliente() + "<br>";
+                reservacionClientesInfo += "Teléfono: " + reservacionClientes.getTelefonoCliente() + "<br>";
+                reservacionClientesInfo += "Horario Inicio Cita: " + reservacionClientes.getHoraInicio() + "<br>";
+                reservacionClientesInfo += "Horario Final Cita: " + reservacionClientes.getHoraFinal() + "<br>";
+                reservacionClientesInfo += "Día de la cita: " + reservacionClientes.getDiaCita() + "<br>";
+                reservacionClientesInfo += "------------------<br>";
+            }
+        }
+
+        String mensaje = "<html><body style='width: 300px; font-family: Arial, sans-serif;'>"
+                + "<h1 style='text-align: center; margin-top: 10px;'>Menú BarberShop</h1>"
+                + "<hr style='border-top: 2px solid #ccc;'>"
+                + "<div style='display: flex; justify-content: center;'>"
+                + "<div style='background-color: #e6f4e6; padding: 20px; border-radius: 5px;'>"
+                + "<p style='text-align: left; margin-top: 10px;'>"
+                + reservacionClientesInfo
+                + "</p>"
+                + "</div></div></body></html>";
+
+        JOptionPane.showMessageDialog(null, mensaje);
     }
 
     public static void eliminarReservacion(ReservacionClientes[] ReservacionClientesArray, String cedula) {
@@ -312,6 +360,28 @@ public class ReservacionClientes {
         // Mostrar el calendario utilizando JOptionPane
         JOptionPane.showMessageDialog(null, htmlContent.toString(), "Calendario", JOptionPane.INFORMATION_MESSAGE);
 
+        
     }
 
+    public static boolean validarFecha(String fecha, String formato) {
+        SimpleDateFormat diaformato = new SimpleDateFormat(formato);
+        diaformato.setLenient(false); // Desactiva la interpretación flexible de la fecha
+
+        try {
+            Date date = diaformato.parse(fecha);
+
+            // Obtener la fecha actual
+            Calendar cal = Calendar.getInstance();
+            int mesActual = cal.get(Calendar.MONTH);
+
+            // Obtener el mes de la fecha ingresada
+            cal.setTime(date);
+            int mesIngresado = cal.get(Calendar.MONTH);
+
+            // Validar si el mes ingresado es posterior o igual al mes actual
+            return mesIngresado >= mesActual;
+        } catch (ParseException e) {
+            return false;
+        }
+    }
 }
