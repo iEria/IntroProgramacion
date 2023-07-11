@@ -156,9 +156,23 @@ public class Barbero {
         String nombreApellidos = (String) JOptionPane.showInputDialog(null, mensajeApellidos, "Menú Administracion Personal - Nuevo Barbero", JOptionPane.PLAIN_MESSAGE, null, null, null);
         String cedulaBarbero = (String) JOptionPane.showInputDialog(null, mensajeCedula, "Menú Administracion Personal - Nuevo Barbero", JOptionPane.PLAIN_MESSAGE, null, null, null);
         String telefonoBarbero = (String) JOptionPane.showInputDialog(null, mensajeTelefono, "Menú Administracion Personal - Nuevo Barbero", JOptionPane.PLAIN_MESSAGE, null, null, null);
-        String horaAlmuerzoBarberoI = (String) JOptionPane.showInputDialog(null, mensajeHoraI, "Menú Administracion Personal - Nuevo Barbero", JOptionPane.PLAIN_MESSAGE, null, null, null);
-        String horaAlmuerzoBarberoF = (String) JOptionPane.showInputDialog(null, mensajeHoraF, "Menú Administracion Personal - Nuevo Barbero", JOptionPane.PLAIN_MESSAGE, null, null, null);
+        String[] options = {"8:00 AM", "9:00 AM", "10:00 AM", "11:00 AM", "12:00 MD", "1:00 PM", "2:00 PM", "3:00 PM", "4:00 PM", "5:00 PM", "6:00 PM"};
 
+        int indiceHoraInicio = JOptionPane.showOptionDialog(null, "Seleccione la hora inicio del almuerzo del Barbero", "Menú de opciones",
+                JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null, options, options[0]);
+
+        String horaAlmuerzoBarberoI = options[indiceHoraInicio];
+
+        // Obtener las opciones para la hora final
+        String[] opcionesHoraFinal = new String[options.length - indiceHoraInicio - 1];
+        for (int i = indiceHoraInicio + 1; i < options.length; i++) {
+            opcionesHoraFinal[i - indiceHoraInicio - 1] = options[i];
+        }
+
+        int indiceHoraFinal = JOptionPane.showOptionDialog(null, "Seleccione la hora final del almuerzo del Barbero", "Menú de opciones",
+                JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null, opcionesHoraFinal, opcionesHoraFinal[0]);
+
+        String horaAlmuerzoBarberoF = opcionesHoraFinal[indiceHoraFinal];
         boolean campoInvalido = nombreBarbero.isEmpty() || nombreApellidos.isEmpty() || cedulaBarbero.isEmpty() || telefonoBarbero.isEmpty()
                 || horaAlmuerzoBarberoI.isEmpty() || horaAlmuerzoBarberoF.isEmpty();
         while (comenzar) {
@@ -238,51 +252,48 @@ public class Barbero {
 
     public static void actualizarBarbero(Barbero[] barberoArray, String cedulavieja) {
         boolean cedulaEncontrada = false;
-        String mensajeNombreUpdate = "<html><body style='width: 250px; font-family: Arial, sans-serif;'>" + "<h1 style='text-align: center; margin-top: 10px;'>Menú BarberShop</h1>" + "<hr style='border-top: 2px solid #ccc;'>" + "<div style='display: flex; justify-content: center;'>" + "<ul style='list-style-type: none; padding: 0; text-align: left;'>" + "<li style='margin-bottom: 10px;'>Ingrese el nombre del nuevo barbero </li>" + "</ul></div></body></html>";
-        String mensajeApellidosUpdate = "<html><body style='width: 250px; font-family: Arial, sans-serif;'>" + "<h1 style='text-align: center; margin-top: 10px;'>Menú BarberShop</h1>" + "<hr style='border-top: 2px solid #ccc;'>" + "<div style='display: flex; justify-content: center;'>" + "<ul style='list-style-type: none; padding: 0; text-align: left;'>" + "<li style='margin-bottom: 10px;'>Ingrese los apellidos del nuevo barbero </li>" + "</ul></div></body></html>";
-        String mensajeCedulaUpdate = "<html><body style='width: 250px; font-family: Arial, sans-serif;'>" + "<h1 style='text-align: center; margin-top: 10px;'>Menú BarberShop</h1>" + "<hr style='border-top: 2px solid #ccc;'>" + "<div style='display: flex; justify-content: center;'>" + "<ul style='list-style-type: none; padding: 0; text-align: left;'>" + "<li style='margin-bottom: 10px;'>Ingrese la cedula del nuevo barbero </li>" + "</ul></div></body></html>";
-        String mensajeTelefonoUpdate = "<html><body style='width: 250px; font-family: Arial, sans-serif;'>" + "<h1 style='text-align: center; margin-top: 10px;'>Menú BarberShop</h1>" + "<hr style='border-top: 2px solid #ccc;'>" + "<div style='display: flex; justify-content: center;'>" + "<ul style='list-style-type: none; padding: 0; text-align: left;'>" + "<li style='margin-bottom: 10px;'>Ingrese el telefono del nuevo barbero </li>" + "</ul></div></body></html>";
-        String mensajeHoraIUpdate = "<html><body style='width: 250px; font-family: Arial, sans-serif;'>" + "<h1 style='text-align: center; margin-top: 10px;'>Menú BarberShop</h1>" + "<hr style='border-top: 2px solid #ccc;'>" + "<div style='display: flex; justify-content: center;'>" + "<ul style='list-style-type: none; padding: 0; text-align: left;'>" + "<li style='margin-bottom: 10px;'>Ingrese la hora de inicio de almuerzo del nuevo barbero </li>" + "</ul></div></body></html>";
-        String mensajeHoraFUpdate = "<html><body style='width: 250px; font-family: Arial, sans-serif;'>" + "<h1 style='text-align: center; margin-top: 10px;'>Menú BarberShop</h1>" + "<hr style='border-top: 2px solid #ccc;'>" + "<div style='display: flex; justify-content: center;'>" + "<ul style='list-style-type: none; padding: 0; text-align: left;'>" + "<li style='margin-bottom: 10px;'>Ingrese la hora de final de almuerzo del nuevo barbero </li>" + "</ul></div></body></html>";
+        String mensajeHoraIUpdate = "<html><body style='width: 250px; font-family: Arial, sans-serif;'>" + "<h1 style='text-align: center; margin-top: 10px;'>Menú BarberShop</h1>" + "<hr style='border-top: 2px solid #ccc;'>" + "<div style='display: flex; justify-content: center;'>" + "<ul style='list-style-type: none; padding: 0; text-align: left;'>" + "<li style='margin-bottom: 10px;'>Ingrese la nueva hora de inicio de almuerzo del barbero </li>" + "</ul></div></body></html>";
+        String mensajeHoraFUpdate = "<html><body style='width: 250px; font-family: Arial, sans-serif;'>" + "<h1 style='text-align: center; margin-top: 10px;'>Menú BarberShop</h1>" + "<hr style='border-top: 2px solid #ccc;'>" + "<div style='display: flex; justify-content: center;'>" + "<ul style='list-style-type: none; padding: 0; text-align: left;'>" + "<li style='margin-bottom: 10px;'>Ingrese la nueva hora de final de almuerzo del barbero </li>" + "</ul></div></body></html>";
 
-        String nombreBarbero = (String) JOptionPane.showInputDialog(null, mensajeNombreUpdate, "Menú Administracion Personal - Nuevo Barbero", JOptionPane.PLAIN_MESSAGE, null, null, null);
-        String nombreApellidos = (String) JOptionPane.showInputDialog(null, mensajeApellidosUpdate, "Menú Administracion Personal - Nuevo Barbero", JOptionPane.PLAIN_MESSAGE, null, null, null);
-        String cedulaBarbero = (String) JOptionPane.showInputDialog(null, mensajeCedulaUpdate, "Menú Administracion Personal - Nuevo Barbero", JOptionPane.PLAIN_MESSAGE, null, null, null);
-        String telefonoBarbero = (String) JOptionPane.showInputDialog(null, mensajeTelefonoUpdate, "Menú Administracion Personal - Nuevo Barbero", JOptionPane.PLAIN_MESSAGE, null, null, null);
-        String horaAlmuerzoBarberoI = (String) JOptionPane.showInputDialog(null, mensajeHoraIUpdate, "Menú Administracion Personal - Nuevo Barbero", JOptionPane.PLAIN_MESSAGE, null, null, null);
-        String horaAlmuerzoBarberoF = (String) JOptionPane.showInputDialog(null, mensajeHoraFUpdate, "Menú Administracion Personal - Nuevo Barbero", JOptionPane.PLAIN_MESSAGE, null, null, null);
+         String[] options = {"8:00 AM", "9:00 AM", "10:00 AM", "11:00 AM", "12:00 MD", "1:00 PM", "2:00 PM", "3:00 PM", "4:00 PM", "5:00 PM", "6:00 PM"};
 
-        boolean campoInvalido = nombreBarbero.isEmpty() || nombreApellidos.isEmpty() || cedulaBarbero.isEmpty() || telefonoBarbero.isEmpty()
-                || horaAlmuerzoBarberoI.isEmpty() || horaAlmuerzoBarberoF.isEmpty();
+        int indiceHoraInicio = JOptionPane.showOptionDialog(null, "Seleccione la nueva hora inicio del almuerzo del Barbero", "Menú de opciones",
+                JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null, options, options[0]);
+
+        String horaAlmuerzoBarberoI = options[indiceHoraInicio];
+
+        // Obtener las opciones para la hora final
+        String[] opcionesHoraFinal = new String[options.length - indiceHoraInicio - 1];
+        for (int i = indiceHoraInicio + 1; i < options.length; i++) {
+            opcionesHoraFinal[i - indiceHoraInicio - 1] = options[i];
+        }
+
+        int indiceHoraFinal = JOptionPane.showOptionDialog(null, "Seleccione la nueva hora final del almuerzo del Barbero", "Menú de opciones",
+                JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null, opcionesHoraFinal, opcionesHoraFinal[0]);
+
+        String horaAlmuerzoBarberoF = opcionesHoraFinal[indiceHoraFinal];
+        boolean campoInvalido = horaAlmuerzoBarberoI.isEmpty() || horaAlmuerzoBarberoF.isEmpty();
 
         if (!campoInvalido) {
             for (int i = 0; i < barberoArray.length; i++) {
                 if (barberoArray[i] != null && barberoArray[i].getCedula().equals(cedulavieja)) {
-                    Barbero nuevoBarbero = new Barbero();
-                    int idvieja = barberoArray[i].getid();
-                    nuevoBarbero.setid(idvieja);
-                    nuevoBarbero.setNombre(nombreBarbero);
-                    nuevoBarbero.setApellidos(nombreApellidos);
-                    nuevoBarbero.setCedula(cedulaBarbero);
-                    nuevoBarbero.setTelefono(telefonoBarbero);
-                    nuevoBarbero.setHoraAlmuerzoInicio(horaAlmuerzoBarberoI);
-                    nuevoBarbero.setHoraAlmuerzoFinal(horaAlmuerzoBarberoF);
+                    barberoArray[i].setHoraAlmuerzoInicio(horaAlmuerzoBarberoI);
+                    barberoArray[i].setHoraAlmuerzoFinal(horaAlmuerzoBarberoF);
 
                     cedulaEncontrada = true;
-                    barberoArray[i] = nuevoBarbero;
                     break;
                 }
             }
-
         } else {
             // Mostrar mensaje de error si al menos uno de los campos es nulo o está en blanco
             JOptionPane.showMessageDialog(null, "Error: Todos los campos son obligatorios.", "Error", JOptionPane.ERROR_MESSAGE);
-
         }
+
         if (!cedulaEncontrada) {
-            JOptionPane.showMessageDialog(null, "Error: No se encontro la cedula.", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Error: No se encontró la cédula.", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
+
 
     public static boolean hayBarberosAgregados(Barbero[] barberoArray) {
         for (Barbero barbero : barberoArray) {

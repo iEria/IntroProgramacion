@@ -232,6 +232,7 @@ public class ReservacionClientes {
         for (int i = 0; i < ReservacionClientesArray.length; i++) {
             ReservacionClientes reservacionclientes = ReservacionClientesArray[i];
             if (reservacionclientes != null) {
+                reservacionclientesInfo += "Nombre: " + reservacionclientes.getid() + "<br>";
                 reservacionclientesInfo += "Nombre: " + reservacionclientes.getNombreCliente() + "<br>";
                 reservacionclientesInfo += "Apellidos: " + reservacionclientes.getCedulaCliente() + "<br>";
                 reservacionclientesInfo += "Cédula: " + reservacionclientes.getApellidosCliente() + "<br>";
@@ -256,12 +257,16 @@ public class ReservacionClientes {
         JOptionPane.showMessageDialog(null, mensaje);
 
     }
-    
-    public static void mostrarReservacionClientesPorDia(ReservacionClientes[] ReservacionClientesArray, String diaCita) {
+
+    public static boolean mostrarReservacionClientesPorDia(ReservacionClientes[] ReservacionClientesArray, String diaCita) {
         String reservacionClientesInfo = "";
+        boolean reservacionesEncontradas = false;
+
         for (int i = 0; i < ReservacionClientesArray.length; i++) {
             ReservacionClientes reservacionClientes = ReservacionClientesArray[i];
             if (reservacionClientes != null && reservacionClientes.getDiaCita().equals(diaCita)) {
+                reservacionesEncontradas = true;
+                reservacionClientesInfo += "ID: " + reservacionClientes.getid() + "<br>";
                 reservacionClientesInfo += "Nombre: " + reservacionClientes.getNombreCliente() + "<br>";
                 reservacionClientesInfo += "Apellidos: " + reservacionClientes.getApellidosCliente() + "<br>";
                 reservacionClientesInfo += "Cédula: " + reservacionClientes.getCedulaCliente() + "<br>";
@@ -273,35 +278,43 @@ public class ReservacionClientes {
             }
         }
 
-        String mensaje = "<html><body style='width: 300px; font-family: Arial, sans-serif;'>"
-                + "<h1 style='text-align: center; margin-top: 10px;'>Menú BarberShop</h1>"
-                + "<hr style='border-top: 2px solid #ccc;'>"
-                + "<div style='display: flex; justify-content: center;'>"
-                + "<div style='background-color: #e6f4e6; padding: 20px; border-radius: 5px;'>"
-                + "<p style='text-align: left; margin-top: 10px;'>"
-                + reservacionClientesInfo
-                + "</p>"
-                + "</div></div></body></html>";
+        if (reservacionesEncontradas) {
+            String mensaje = "<html><body style='width: 300px; font-family: Arial, sans-serif;'>"
+                    + "<h1 style='text-align: center; margin-top: 10px;'>Menú BarberShop</h1>"
+                    + "<hr style='border-top: 2px solid #ccc;'>"
+                    + "<div style='display: flex; justify-content: center;'>"
+                    + "<div style='background-color: #e6f4e6; padding: 20px; border-radius: 5px;'>"
+                    + "<p style='text-align: left; margin-top: 10px;'>"
+                    + reservacionClientesInfo
+                    + "</p>"
+                    + "</div></div></body></html>";
 
-        JOptionPane.showMessageDialog(null, mensaje);
+            JOptionPane.showMessageDialog(null, mensaje);
+        } else {
+            JOptionPane.showMessageDialog(null, "No hay citas para el día ingresado.", "Información", JOptionPane.INFORMATION_MESSAGE);
+            return false;
+        }
+        return true;
     }
 
-    public static void eliminarReservacion(ReservacionClientes[] ReservacionClientesArray, String cedula) {
-        boolean cedulaEncontrada = false;
+
+    public static void eliminarReservacion(ReservacionClientes[] ReservacionClientesArray, int idReserva) {
+        boolean idEncontrado = false;
 
         for (int i = 0; i < ReservacionClientesArray.length; i++) {
-            if (ReservacionClientesArray[i] != null && ReservacionClientesArray[i].getCedulaCliente().equals(cedula)) {
+            if (ReservacionClientesArray[i] != null && ReservacionClientesArray[i].getid() == idReserva) {
                 ReservacionClientesArray[i] = null;
-                cedulaEncontrada = true;
+                idEncontrado = true;
                 mostrarMensajeExitoEliminacion();
                 break;
             }
         }
 
-        if (!cedulaEncontrada) {
-            JOptionPane.showMessageDialog(null, "Error: No se encontro la cedula.", "Error", JOptionPane.ERROR_MESSAGE);
+        if (!idEncontrado) {
+            JOptionPane.showMessageDialog(null, "Error: No se encontró el ID de reserva.", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
+
 
     public static boolean hayClientesAgregados(ReservacionClientes[] ReservacionClientesArray) {
         for (ReservacionClientes reservacionclientes : ReservacionClientesArray) {
