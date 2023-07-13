@@ -2,13 +2,16 @@ package com.mycompany.sc202_2c2023_g1;
 
 import Objetos.Barbero;
 import Objetos.ReservacionClientes;
+
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import java.awt.Image;
 
 public class SC202_2C2023_G1 {
 
+
     public static void main(String[] args) {
+        Barbero[] barberoArray = new Barbero[6];
         boolean repetir = true;
         while (repetir) {
             String mensaje = "<html><body style='width: 250px; font-family: Arial, sans-serif;'>"
@@ -39,10 +42,10 @@ public class SC202_2C2023_G1 {
             if (ValidacionNumero(opcion)) {
                 switch (opcion) {
                     case "1":
-                        SubMenu1();
+                        SubMenu1(barberoArray);
                         break;
                     case "2":
-                        SubMenu2();
+                        SubMenu2(barberoArray);
                         break;
                     case "3":
                         JOptionPane.showMessageDialog(null, "Opcion #3");
@@ -73,8 +76,8 @@ public class SC202_2C2023_G1 {
         }
     }
 
-    public static void SubMenu1() {
-        Barbero[] barberoArray = new Barbero[6];
+    public static void SubMenu1(Barbero[] barberoArray) {
+
         boolean repetir = true;
         while (repetir) {
             String mensaje = "<html><body style='width: 250px; font-family: Arial, sans-serif;'>"
@@ -164,7 +167,7 @@ public class SC202_2C2023_G1 {
 
     }
 
-    public static void SubMenu2() {
+    public static void SubMenu2(Barbero[] barberoArray) {
         ReservacionClientes[] ReservacionClientesArray = new ReservacionClientes[30];
         boolean repetir = true;
         while (repetir) {
@@ -186,7 +189,11 @@ public class SC202_2C2023_G1 {
             if (ValidacionNumero(opcion)) {
                 switch (opcion) {
                     case "1":
-                        ReservacionClientes.CrearReservacionClientes(ReservacionClientesArray);
+                        if (Barbero.hayBarberosAgregados(barberoArray)) {
+                            ReservacionClientes.CrearReservacionClientes(ReservacionClientesArray);
+                        } else {
+                            JOptionPane.showMessageDialog(null, "Error: No hay barberos agregados.", "Error", JOptionPane.ERROR_MESSAGE);
+                        }
                         break;
                     case "2":
                         if (ReservacionClientes.hayClientesAgregados(ReservacionClientesArray)) {
@@ -198,9 +205,9 @@ public class SC202_2C2023_G1 {
                                 switch (opcion2) {
                                     case "1":
                                         String DiaCita = (String) JOptionPane.showInputDialog(null, "Ingrese el dia con el formato (dd/mm/yyyy) de las citas que quiere mostrar", "Menú Reservación de espacios - Mostar Reservacion", JOptionPane.PLAIN_MESSAGE, null, null, null);
-                                        if (DiaCita == null || DiaCita.isEmpty()){
+                                        if (DiaCita == null || DiaCita.isEmpty()) {
                                             JOptionPane.showMessageDialog(null, "Error: El campo es obligatorio.", "Error", JOptionPane.ERROR_MESSAGE);
-                                        }else{
+                                        } else {
                                             ReservacionClientes.mostrarReservacionClientesPorDia(ReservacionClientesArray, DiaCita);
                                         }
 
@@ -229,7 +236,7 @@ public class SC202_2C2023_G1 {
                             JOptionPane.showMessageDialog(null, mensajeListaReservaciones);
                             String DiaCita = (String) JOptionPane.showInputDialog(null, "Ingrese el dia con el formato (dd/mm/yyyy) de las citas que quiere mostrar", "Menú Reservación de espacios - Mostar Reservacion", JOptionPane.PLAIN_MESSAGE, null, null, null);
                             boolean eliminar = ReservacionClientes.mostrarReservacionClientesPorDia(ReservacionClientesArray, DiaCita);
-                            if (!eliminar){
+                            if (!eliminar) {
                                 return;
                             }
                             String id = (String) JOptionPane.showInputDialog(null, mensajeCedulaEliminar, "Menú Administracion Personal", JOptionPane.PLAIN_MESSAGE, iconoAjustado, null, null);

@@ -14,7 +14,6 @@ import java.util.Date;
 import javax.swing.JOptionPane;
 
 /**
- *
  * @author eria
  */
 public class ReservacionClientes {
@@ -26,6 +25,7 @@ public class ReservacionClientes {
     public String TelefonoCliente;
     public String HoraInicio;
     public String HoraFinal;
+    public int idBarbero;
     public String DiaCita;
     /*Hay que buscar porque deberia ser de tipo date o algo similar*/
     public static int posicion = 0;
@@ -37,6 +37,14 @@ public class ReservacionClientes {
 
     public int getid() {
         return id;
+    }
+
+    public int getIdBarbero() {
+        return idBarbero;
+    }
+
+    public void setIdBarbero(int idBarbero) {
+        this.idBarbero = idBarbero;
     }
 
     /*Get and Set del atributo CedulaCliente*/
@@ -147,7 +155,6 @@ public class ReservacionClientes {
     }
 
     public static void CrearReservacionClientes(ReservacionClientes[] ReservacionClientesArray) {
-        String formatoFecha = "dd/MM/yyyy";
         int IDReservacionClientes = 0;
         boolean comenzar = true;
         String mensajeNombreCliente = "<html><body style='width: 250px; font-family: Arial, sans-serif;'>" + "<h1 style='text-align: center; margin-top: 10px;'>Menú BarberShop</h1>" + "<hr style='border-top: 2px solid #ccc;'>" + "<div style='display: flex; justify-content: center;'>" + "<ul style='list-style-type: none; padding: 0; text-align: left;'>" + "<li style='margin-bottom: 10px;'>Ingrese el nombre del cliente </li>" + "</ul></div></body></html>";
@@ -160,9 +167,12 @@ public class ReservacionClientes {
             String ApellidosCliente = (String) JOptionPane.showInputDialog(null, mensajeApellidosCliente, "Menú Reservación de espacios - Agregar Reservacion", JOptionPane.PLAIN_MESSAGE, null, null, null);
             String CedulaCliente = (String) JOptionPane.showInputDialog(null, mensajeCedulaCliente, "Menú Reservación de espacios - Agregar Reservacion", JOptionPane.PLAIN_MESSAGE, null, null, null);
             String TelefonoCliente = (String) JOptionPane.showInputDialog(null, mensajeTelefonoCliente, "Menú Reservación de espacios - Agregar Reservacion", JOptionPane.PLAIN_MESSAGE, null, null, null);
+            //Estaba intntando hacer como las horas pero que sean con el array de barberos que hay
+
+
             MostrarCalendario();
             String DiaCita = (String) JOptionPane.showInputDialog(null, mensajeDiaCita, "Menú Reservación de espacios - Agregar Reservacion", JOptionPane.PLAIN_MESSAGE, null, null, null);
-            boolean esFechaValida = validarFecha(DiaCita, formatoFecha);
+            boolean esFechaValida = validarFecha(DiaCita, "dd/MM/yyyy");
             if (!esFechaValida) {
                 String mensajeError = "<html><body style='width: 250px; font-family: Arial, sans-serif;'>"
                         + "<h1 style='text-align: center; margin-top: 10px;'>Menú BarberShop</h1>"
@@ -373,7 +383,7 @@ public class ReservacionClientes {
         // Mostrar el calendario utilizando JOptionPane
         JOptionPane.showMessageDialog(null, htmlContent.toString(), "Calendario", JOptionPane.INFORMATION_MESSAGE);
 
-        
+
     }
 
     public static boolean validarFecha(String fecha, String formato) {

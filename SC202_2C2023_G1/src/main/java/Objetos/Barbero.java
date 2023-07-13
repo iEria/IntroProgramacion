@@ -143,7 +143,6 @@ public class Barbero {
             mostrarMensajeError();
             return;
         }
-        int id = 0;
         boolean comenzar = true;
         String mensajeNombre = "<html><body style='width: 250px; font-family: Arial, sans-serif;'>" + "<h1 style='text-align: center; margin-top: 10px;'>Menú BarberShop</h1>" + "<hr style='border-top: 2px solid #ccc;'>" + "<div style='display: flex; justify-content: center;'>" + "<ul style='list-style-type: none; padding: 0; text-align: left;'>" + "<li style='margin-bottom: 10px;'>Ingrese el nombre del nuevo barbero </li>" + "</ul></div></body></html>";
         String mensajeApellidos = "<html><body style='width: 250px; font-family: Arial, sans-serif;'>" + "<h1 style='text-align: center; margin-top: 10px;'>Menú BarberShop</h1>" + "<hr style='border-top: 2px solid #ccc;'>" + "<div style='display: flex; justify-content: center;'>" + "<ul style='list-style-type: none; padding: 0; text-align: left;'>" + "<li style='margin-bottom: 10px;'>Ingrese los apellidos del nuevo barbero </li>" + "</ul></div></body></html>";
@@ -178,7 +177,13 @@ public class Barbero {
         while (comenzar) {
             if (!campoInvalido) {
                 // Incrementar el ID para el próximo barbero
-                id++;
+                int maxId = 0;
+                for (int i = 0; i < posicion; i++) {
+                    if (barbero[i] != null && barbero[i].getid() > maxId) {
+                        maxId = barbero[i].getid();
+                    }
+                }
+                int id = maxId + 1;
 
                 // Crear el nuevo barbero con el ID actual y la información proporcionada
                 Barbero nuevoBarbero = new Barbero();
@@ -209,6 +214,7 @@ public class Barbero {
         for (int i = 0; i < barberoArray.length; i++) {
             Barbero barbero = barberoArray[i];
             if (barbero != null) {
+                barberosInfo += "ID: " + barbero.getid() + "<br>";
                 barberosInfo += "Nombre: " + barbero.getNombre() + "<br>";
                 barberosInfo += "Apellidos: " + barbero.getApellidos() + "<br>";
                 barberosInfo += "Cédula: " + barbero.getCedula() + "<br>";
