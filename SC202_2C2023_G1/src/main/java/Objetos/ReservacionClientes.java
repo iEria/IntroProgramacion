@@ -14,7 +14,7 @@ import java.util.Date;
 import javax.swing.JOptionPane;
 
 /**
- * @author eria
+ * @author Kevin
  */
 public class ReservacionClientes {
 
@@ -209,10 +209,16 @@ public class ReservacionClientes {
                     || DiaCita.isEmpty();
 
             if (!campoInvalido) {
-
-                IDReservacionClientes++;
+ // Incrementar el ID para el próximo barbero
+                int maxId = 0;
+                for (int i = 0; i < posicion; i++) {
+                    if ( ReservacionClientesArray[i] != null &&  ReservacionClientesArray[i].getid() > maxId) {
+                        maxId =  ReservacionClientesArray[i].getid();
+                    }
+                }
+                int id = maxId + 1;
                 ReservacionClientes nuevoReservacionClientes = new ReservacionClientes();
-                nuevoReservacionClientes.setid(IDReservacionClientes);
+                nuevoReservacionClientes.setid(id);
                 nuevoReservacionClientes.setNombreCliente(NombreCliente);
                 nuevoReservacionClientes.setCedulaCliente(CedulaCliente);
                 nuevoReservacionClientes.setApellidosCliente(ApellidosCliente);
@@ -242,7 +248,7 @@ public class ReservacionClientes {
         for (int i = 0; i < ReservacionClientesArray.length; i++) {
             ReservacionClientes reservacionclientes = ReservacionClientesArray[i];
             if (reservacionclientes != null) {
-                reservacionclientesInfo += "Nombre: " + reservacionclientes.getid() + "<br>";
+                reservacionclientesInfo += "ID: " + reservacionclientes.getid() + "<br>";
                 reservacionclientesInfo += "Nombre: " + reservacionclientes.getNombreCliente() + "<br>";
                 reservacionclientesInfo += "Apellidos: " + reservacionclientes.getCedulaCliente() + "<br>";
                 reservacionclientesInfo += "Cédula: " + reservacionclientes.getApellidosCliente() + "<br>";
