@@ -196,7 +196,7 @@ public class SC202_2C2023_G1 {
                         break;
                     case "2":
                         if (ReservacionClientes.hayClientesAgregados(ReservacionClientesArray)) {
-                            String mensaje2 = "<html><body style='width: 250px; font-family: Arial, sans-serif;'>" + "<h1 style='text-align: center; margin-top: 10px;'>Menú BarberShop</h1>" + "<hr style='border-top: 2px solid #ccc;'>" + "<div style='display: flex; justify-content: center;'>" + "<ul style='list-style-type: none; padding: 0; text-align: left;'>" + "<li style='margin-bottom: 10px;'><strong>Opción 1:</strong> Mostrar Reservacion segun dia </li>" + "<li style='margin-bottom: 10px;'><strong>Opción 2:</strong> Mostrar todas las Reservaciones </li>" + "</ul></div></body></html>";
+                            String mensaje2 = "<html><body style='width: 250px; font-family: Arial, sans-serif;'>" + "<h1 style='text-align: center; margin-top: 10px;'>Menú BarberShop</h1>" + "<hr style='border-top: 2px solid #ccc;'>" + "<div style='display: flex; justify-content: center;'>" + "<ul style='list-style-type: none; padding: 0; text-align: left;'>" + "<li style='margin-bottom: 10px;'><strong>Opción 1:</strong> Mostrar Reservacion segun dia </li>" + "<li style='margin-bottom: 10px;'><strong>Opción 2:</strong> Mostrar todas las Reservaciones </li>" +"<li style='margin-bottom: 10px;'><strong>Opción 3:</strong> Atras </li>"+ "</ul></div></body></html>";
 
                             String opcion2 = (String) JOptionPane.showInputDialog(null, mensaje2, "Menú Reservación de espacios", JOptionPane.PLAIN_MESSAGE, iconoAjustado, null, null);
                             if (ValidacionNumero(opcion2)) {
@@ -214,10 +214,11 @@ public class SC202_2C2023_G1 {
                                     case "2":
                                         ReservacionClientes.mostrarReservacionClientes(ReservacionClientesArray);
                                         break;
-
+                                    case "3":
+                                        repetir = false;
+                                        break;
                                     default:
                                         JOptionPane.showMessageDialog(null, "No es una opción válida, reintente");
-
                                 }
                             } else {
                                 JOptionPane.showMessageDialog(null, "No es un número, reintente");
