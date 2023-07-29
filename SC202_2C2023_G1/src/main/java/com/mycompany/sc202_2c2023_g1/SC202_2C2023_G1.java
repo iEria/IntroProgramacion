@@ -10,6 +10,7 @@ import java.awt.Image;
 public class SC202_2C2023_G1 {
 
     public static void main(String[] args) {
+        ReservacionClientes[] ReservacionClientesArray = new ReservacionClientes[30];
         Barbero[] barberoArray = new Barbero[6];
         boolean repetir = true;
         while (repetir) {
@@ -44,10 +45,10 @@ public class SC202_2C2023_G1 {
                         SubMenu1(barberoArray);
                         break;
                     case "2":
-                        SubMenu2(barberoArray);
+                        SubMenu2(barberoArray, ReservacionClientesArray);
                         break;
                     case "3":
-                        SubMenu3(barberoArray);
+                        SubMenu3(barberoArray, ReservacionClientesArray);
                         break;
                     case "4":
                         JOptionPane.showMessageDialog(null, "Opcion #4");
@@ -166,8 +167,7 @@ public class SC202_2C2023_G1 {
 
     }
 
-    public static void SubMenu2(Barbero[] barberoArray) {
-        ReservacionClientes[] ReservacionClientesArray = new ReservacionClientes[30];
+    public static void SubMenu2(Barbero[] barberoArray, ReservacionClientes[] ReservacionClientesArray) {
         boolean repetir = true;
         while (repetir) {
             String mensaje = "<html><body style='width: 250px; font-family: Arial, sans-serif;'>" + "<h1 style='text-align: center; margin-top: 10px;'>Menú BarberShop</h1>" + "<hr style='border-top: 2px solid #ccc;'>" + "<div style='display: flex; justify-content: center;'>" + "<ul style='list-style-type: none; padding: 0; text-align: left;'>" + "<li style='margin-bottom: 10px;'><strong>Opción 1:</strong> Agregar Reservacion </li>" + "<li style='margin-bottom: 10px;'><strong>Opción 2:</strong> Mostrar Reservaciones </li>" + "<li style='margin-bottom: 10px;'><strong>Opción 3:</strong> Atras </li>" + "</ul></div></body></html>";
@@ -196,7 +196,7 @@ public class SC202_2C2023_G1 {
                         break;
                     case "2":
                         if (ReservacionClientes.hayClientesAgregados(ReservacionClientesArray)) {
-                            String mensaje2 = "<html><body style='width: 250px; font-family: Arial, sans-serif;'>" + "<h1 style='text-align: center; margin-top: 10px;'>Menú BarberShop</h1>" + "<hr style='border-top: 2px solid #ccc;'>" + "<div style='display: flex; justify-content: center;'>" + "<ul style='list-style-type: none; padding: 0; text-align: left;'>" + "<li style='margin-bottom: 10px;'><strong>Opción 1:</strong> Mostrar Reservacion segun dia </li>" + "<li style='margin-bottom: 10px;'><strong>Opción 2:</strong> Mostrar todas las Reservaciones </li>" +"<li style='margin-bottom: 10px;'><strong>Opción 3:</strong> Atras </li>"+ "</ul></div></body></html>";
+                            String mensaje2 = "<html><body style='width: 250px; font-family: Arial, sans-serif;'>" + "<h1 style='text-align: center; margin-top: 10px;'>Menú BarberShop</h1>" + "<hr style='border-top: 2px solid #ccc;'>" + "<div style='display: flex; justify-content: center;'>" + "<ul style='list-style-type: none; padding: 0; text-align: left;'>" + "<li style='margin-bottom: 10px;'><strong>Opción 1:</strong> Mostrar Reservacion segun dia </li>" + "<li style='margin-bottom: 10px;'><strong>Opción 2:</strong> Mostrar todas las Reservaciones </li>" + "<li style='margin-bottom: 10px;'><strong>Opción 3:</strong> Atras </li>" + "</ul></div></body></html>";
 
                             String opcion2 = (String) JOptionPane.showInputDialog(null, mensaje2, "Menú Reservación de espacios", JOptionPane.PLAIN_MESSAGE, iconoAjustado, null, null);
                             if (ValidacionNumero(opcion2)) {
@@ -244,8 +244,7 @@ public class SC202_2C2023_G1 {
         }
     }
 
-    public static void SubMenu3(Barbero[] barberoArray) {
-        ReservacionClientes[] ReservacionClientesArray = new ReservacionClientes[30];
+    public static void SubMenu3(Barbero[] barberoArray, ReservacionClientes[] ReservacionClientesArray) {
         boolean repetir = true;
         while (repetir) {
             String mensaje = "<html><body style='width: 250px; font-family: Arial, sans-serif;'>" + "<h1 style='text-align: center; margin-top: 10px;'>Menú BarberShop</h1>" + "<hr style='border-top: 2px solid #ccc;'>" + "<div style='display: flex; justify-content: center;'>" + "<ul style='list-style-type: none; padding: 0; text-align: left;'>" + "<li style='margin-bottom: 10px;'><strong>Opción 1:</strong> Devolver Reservacion </li>" + "<li style='margin-bottom: 10px;'><strong>Opción 2:</strong> Atras </li>" + "</ul></div></body></html>";
@@ -266,29 +265,31 @@ public class SC202_2C2023_G1 {
             if (ValidacionNumero(opcion)) {
                 switch (opcion) {
                     case "1":
-                        if (ReservacionClientes.hayClientesAgregados(ReservacionClientesArray)) {
-                            String mensajeCedulaEliminar = "<html><body style='width: 250px; font-family: Arial, sans-serif;'>" + "<h1 style='text-align: center; margin-top: 10px;'>Menú BarberShop</h1>" + "<hr style='border-top: 2px solid #ccc;'>" + "<div style='display: flex; justify-content: center;'>" + "<ul style='list-style-type: none; padding: 0; text-align: left;'>" + "<li style='margin-bottom: 10px;'>Ingrese el ID de la reservacion que desea eliminar </li>" + "</ul></div></body></html>";
-                            String mensajeListaReservaciones = "<html><body style='width: 250px; font-family: Arial, sans-serif;'>" + "<h1 style='text-align: center; margin-top: 10px;'>Menú BarberShop</h1>" + "<hr style='border-top: 2px solid #ccc;'>" + "<div style='display: flex; justify-content: center;'>" + "<div style='background-color: #f2f2f2; padding: 20px; border-radius: 5px;'>" + "<h3 style='text-align: center; margin-top: 10px; color: #333;'>Se le mostrará la lista de las Reservaciones</h3>" + "<p style='text-align: center; margin-top: 10px; color: #333;'>Por favor, tome nota del id de la reservacion que desea eliminar.</p>" + "<div style='display: flex; justify-content: center;'>" + "<ul style='list-style-type: none; padding: 0; text-align: left;'>";
-                            JOptionPane.showMessageDialog(null, mensajeListaReservaciones);
-                            String DiaCita = (String) JOptionPane.showInputDialog(null, "Ingrese el dia con el formato (dd/mm/yyyy) de las citas que quiere mostrar", "Menú Devolucion de espacios - Mostar Reservacion", JOptionPane.PLAIN_MESSAGE, null, null, null);
-                            boolean eliminar = ReservacionClientes.mostrarReservacionClientesPorDia(ReservacionClientesArray, DiaCita);
-                            if (!eliminar) {
-                                return;
-                            }
-                            String id = (String) JOptionPane.showInputDialog(null, mensajeCedulaEliminar, "Menú Administracion Personal", JOptionPane.PLAIN_MESSAGE, iconoAjustado, null, null);
-                            if (id != null) {
-                                try {
-                                    int idparseado = Integer.parseInt(id);
-                                    ReservacionClientes.eliminarReservacion(ReservacionClientesArray, idparseado);
-                                } catch (NumberFormatException e) {
-                                    JOptionPane.showMessageDialog(null, "Error: El campo debe ser un número entero.", "Error", JOptionPane.ERROR_MESSAGE);
-                                }
-                            } else {
-                                JOptionPane.showMessageDialog(null, "Error: El campo es obligatorio.", "Error", JOptionPane.ERROR_MESSAGE);
-                            }
+                        if (Barbero.hayBarberosAgregados(barberoArray)) {
 
+                            if (ReservacionClientes.hayClientesAgregados(ReservacionClientesArray)) {
+                                String mensajeCedulaEliminar = "<html><body style='width: 250px; font-family: Arial, sans-serif;'>" + "<h1 style='text-align: center; margin-top: 10px;'>Menú BarberShop</h1>" + "<hr style='border-top: 2px solid #ccc;'>" + "<div style='display: flex; justify-content: center;'>" + "<ul style='list-style-type: none; padding: 0; text-align: left;'>" + "<li style='margin-bottom: 10px;'>Ingrese el ID de la reservacion que desea devolver </li>" + "</ul></div></body></html>";
+                                String mensajeListaReservaciones = "<html><body style='width: 250px; font-family: Arial, sans-serif;'>" + "<h1 style='text-align: center; margin-top: 10px;'>Menú BarberShop</h1>" + "<hr style='border-top: 2px solid #ccc;'>" + "<div style='display: flex; justify-content: center;'>" + "<div style='background-color: #f2f2f2; padding: 20px; border-radius: 5px;'>" + "<h3 style='text-align: center; margin-top: 10px; color: #333;'>Se le mostrará la lista de las Reservaciones</h3>" + "<p style='text-align: center; margin-top: 10px; color: #333;'>Por favor, tome nota del id de la reservacion que desea devolver.</p>" + "<div style='display: flex; justify-content: center;'>" + "<ul style='list-style-type: none; padding: 0; text-align: left;'>";
+                                JOptionPane.showMessageDialog(null, mensajeListaReservaciones);
+                                ReservacionClientes.mostrarReservacionClientes(ReservacionClientesArray);
+                                String id = (String) JOptionPane.showInputDialog(null, mensajeCedulaEliminar, "Menú Administracion Personal", JOptionPane.PLAIN_MESSAGE, iconoAjustado, null, null);
+                                if (id != null) {
+                                    try {
+                                        int idparseado = Integer.parseInt(id);
+                                        ReservacionClientes.eliminarReservacion(ReservacionClientesArray, idparseado);
+                                    } catch (NumberFormatException e) {
+                                        JOptionPane.showMessageDialog(null, "Error: El campo debe ser un número entero.", "Error", JOptionPane.ERROR_MESSAGE);
+                                    }
+                                } else {
+                                    JOptionPane.showMessageDialog(null, "Error: El campo es obligatorio.", "Error", JOptionPane.ERROR_MESSAGE);
+                                }
+
+                            } else {
+                                JOptionPane.showMessageDialog(null, "Error: No hay Reservaciones agregados.", "Error", JOptionPane.ERROR_MESSAGE);
+                            }
                         } else {
                             JOptionPane.showMessageDialog(null, "Error: No hay barberos agregados.", "Error", JOptionPane.ERROR_MESSAGE);
+
                         }
                         break;
                     case "2":
