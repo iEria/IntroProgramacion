@@ -138,7 +138,7 @@ public class ReservacionClientes {
 
     private static void mostrarMensajeDatosReservacionClientes(ReservacionClientes reservacionclientes) {
         String mensajeDatosReservacionClientes = "<html><body style='width: 250px; font-family: Arial, sans-serif;'>"
-                + "<h1 style='text-align: center; margin-top: 10px;'>Datos del Barbero</h1>"
+                + "<h1 style='text-align: center; margin-top: 10px;'>Datos de Reservacion Clientes</h1>"
                 + "<hr style='border-top: 2px solid #ccc;'>"
                 + "<div style='display: flex; justify-content: center;'>"
                 + "<div style='background-color: #e6f4e6; padding: 20px; border-radius: 5px;'>"
@@ -154,7 +154,7 @@ public class ReservacionClientes {
         JOptionPane.showMessageDialog(null, mensajeDatosReservacionClientes);
     }
 
-    public static void CrearReservacionClientes(ReservacionClientes[] ReservacionClientesArray) {
+    public static void CrearReservacionClientes(ReservacionClientes[] ReservacionClientesArray, Barbero[] barberoArray) {
         int IDReservacionClientes = 0;
         boolean comenzar = true;
         String mensajeNombreCliente = "<html><body style='width: 250px; font-family: Arial, sans-serif;'>" + "<h1 style='text-align: center; margin-top: 10px;'>Menú BarberShop</h1>" + "<hr style='border-top: 2px solid #ccc;'>" + "<div style='display: flex; justify-content: center;'>" + "<ul style='list-style-type: none; padding: 0; text-align: left;'>" + "<li style='margin-bottom: 10px;'>Ingrese el nombre del cliente </li>" + "</ul></div></body></html>";
@@ -168,7 +168,25 @@ public class ReservacionClientes {
             String CedulaCliente = (String) JOptionPane.showInputDialog(null, mensajeCedulaCliente, "Menú Reservación de espacios - Agregar Reservacion", JOptionPane.PLAIN_MESSAGE, null, null, null);
             String TelefonoCliente = (String) JOptionPane.showInputDialog(null, mensajeTelefonoCliente, "Menú Reservación de espacios - Agregar Reservacion", JOptionPane.PLAIN_MESSAGE, null, null, null);
             //Estaba intntando hacer como las horas pero que sean con el array de barberos que hay
+            int count = 0;
+            for (Barbero barbero : barberoArray) {
+                if (barbero != null) {
+                    count++;
+                }
+            }
 
+            // Crear un array de los nombres de los barberos no nulos
+            String[] nombresBarberos = new String[count];
+            int x = 0;
+            for (Barbero barbero : barberoArray) {
+                if (barbero != null) {
+                    nombresBarberos[x] = barbero.getNombre();
+                    x++;
+                }
+            }
+
+            int indiceNombreBarbero = JOptionPane.showOptionDialog(null, "Seleccione el nombre del barbero que desea", "Menú de opciones",
+                    JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null, nombresBarberos, nombresBarberos[0]);
 
             MostrarCalendario();
             String DiaCita = (String) JOptionPane.showInputDialog(null, mensajeDiaCita, "Menú Reservación de espacios - Agregar Reservacion", JOptionPane.PLAIN_MESSAGE, null, null, null);
@@ -209,11 +227,11 @@ public class ReservacionClientes {
                     || DiaCita.isEmpty();
 
             if (!campoInvalido) {
- // Incrementar el ID para el próximo barbero
+                // Incrementar el ID para el próximo barbero
                 int maxId = 0;
                 for (int i = 0; i < posicion; i++) {
-                    if ( ReservacionClientesArray[i] != null &&  ReservacionClientesArray[i].getid() > maxId) {
-                        maxId =  ReservacionClientesArray[i].getid();
+                    if (ReservacionClientesArray[i] != null && ReservacionClientesArray[i].getid() > maxId) {
+                        maxId = ReservacionClientesArray[i].getid();
                     }
                 }
                 int id = maxId + 1;
@@ -313,7 +331,6 @@ public class ReservacionClientes {
         return true;
     }
 
-
     public static void eliminarReservacion(ReservacionClientes[] ReservacionClientesArray, int idReserva) {
         boolean idEncontrado = false;
 
@@ -330,7 +347,6 @@ public class ReservacionClientes {
             JOptionPane.showMessageDialog(null, "Error: No se encontró el ID de reserva.", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
-
 
     public static boolean hayClientesAgregados(ReservacionClientes[] ReservacionClientesArray) {
         for (ReservacionClientes reservacionclientes : ReservacionClientesArray) {
@@ -388,7 +404,6 @@ public class ReservacionClientes {
 
         // Mostrar el calendario utilizando JOptionPane
         JOptionPane.showMessageDialog(null, htmlContent.toString(), "Calendario", JOptionPane.INFORMATION_MESSAGE);
-
 
     }
 

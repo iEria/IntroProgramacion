@@ -189,7 +189,7 @@ public class SC202_2C2023_G1 {
                 switch (opcion) {
                     case "1":
                         if (Barbero.hayBarberosAgregados(barberoArray)) {
-                            ReservacionClientes.CrearReservacionClientes(ReservacionClientesArray);
+                            ReservacionClientes.CrearReservacionClientes(ReservacionClientesArray ,barberoArray );
                         } else {
                             JOptionPane.showMessageDialog(null, "Error: No hay barberos agregados.", "Error", JOptionPane.ERROR_MESSAGE);
                         }
