@@ -212,7 +212,7 @@ public class SC202_2C2023_G1 {
 
                                         break;
                                     case "2":
-                                        ReservacionClientes.mostrarReservacionClientes(ReservacionClientesArray);
+                                        ReservacionClientes.mostrarReservacionClientes(ReservacionClientesArray , barberoArray);
                                         break;
                                     case "3":
                                         repetir = false;
@@ -271,7 +271,7 @@ public class SC202_2C2023_G1 {
                                 String mensajeCedulaEliminar = "<html><body style='width: 250px; font-family: Arial, sans-serif;'>" + "<h1 style='text-align: center; margin-top: 10px;'>Menú BarberShop</h1>" + "<hr style='border-top: 2px solid #ccc;'>" + "<div style='display: flex; justify-content: center;'>" + "<ul style='list-style-type: none; padding: 0; text-align: left;'>" + "<li style='margin-bottom: 10px;'>Ingrese el ID de la reservacion que desea devolver </li>" + "</ul></div></body></html>";
                                 String mensajeListaReservaciones = "<html><body style='width: 250px; font-family: Arial, sans-serif;'>" + "<h1 style='text-align: center; margin-top: 10px;'>Menú BarberShop</h1>" + "<hr style='border-top: 2px solid #ccc;'>" + "<div style='display: flex; justify-content: center;'>" + "<div style='background-color: #f2f2f2; padding: 20px; border-radius: 5px;'>" + "<h3 style='text-align: center; margin-top: 10px; color: #333;'>Se le mostrará la lista de las Reservaciones</h3>" + "<p style='text-align: center; margin-top: 10px; color: #333;'>Por favor, tome nota del id de la reservacion que desea devolver.</p>" + "<div style='display: flex; justify-content: center;'>" + "<ul style='list-style-type: none; padding: 0; text-align: left;'>";
                                 JOptionPane.showMessageDialog(null, mensajeListaReservaciones);
-                                ReservacionClientes.mostrarReservacionClientes(ReservacionClientesArray);
+                                ReservacionClientes.mostrarReservacionClientes(ReservacionClientesArray , barberoArray);
                                 String id = (String) JOptionPane.showInputDialog(null, mensajeCedulaEliminar, "Menú Administracion Personal", JOptionPane.PLAIN_MESSAGE, iconoAjustado, null, null);
                                 if (id != null) {
                                     try {
