@@ -87,7 +87,6 @@ public class SC202_2C2023_G1 {
                     + "<ul style='list-style-type: none; padding: 0; text-align: left;'>"
                     + "<li style='margin-bottom: 10px;'><strong>Opción 1:</strong> Agregar Barbero </li>"
                     + "<li style='margin-bottom: 10px;'><strong>Opción 2:</strong> Mostrar Barberos </li>"
-                    + "<li style='margin-bottom: 10px;'><strong>Opción 3:</strong> Actualizar Almuerzo Barbero</li>"
                     + "<li style='margin-bottom: 10px;'><strong>Opción 4:</strong> Eliminar Barbero</li>"
                     + "<li style='margin-bottom: 10px;'><strong>Opción 5:</strong> Atras </li>"
                     + "</ul></div></body></html>";
@@ -119,23 +118,8 @@ public class SC202_2C2023_G1 {
                             JOptionPane.showMessageDialog(null, "Error: No hay barberos agregados.", "Error", JOptionPane.ERROR_MESSAGE);
                         }
                         break;
-                    //Actualizar Barberos
+                    //Actualizar Barberos                  
                     case "3":
-                        if (Barbero.hayBarberosAgregados(barberoArray)) {
-                            String mensajeListaBarberos = "<html><body style='width: 250px; font-family: Arial, sans-serif;'>" + "<h1 style='text-align: center; margin-top: 10px;'>Menú BarberShop</h1>" + "<hr style='border-top: 2px solid #ccc;'>" + "<div style='display: flex; justify-content: center;'>" + "<div style='background-color: #f2f2f2; padding: 20px; border-radius: 5px;'>" + "<h3 style='text-align: center; margin-top: 10px; color: #333;'>Se le mostrará la lista de barberos</h3>" + "<p style='text-align: center; margin-top: 10px; color: #333;'>Por favor, tome nota de la cédula del barbero que desea actualizar.</p>" + "<div style='display: flex; justify-content: center;'>" + "<ul style='list-style-type: none; padding: 0; text-align: left;'>";
-                            JOptionPane.showMessageDialog(null, mensajeListaBarberos);
-                            Barbero.mostrarBarberos(barberoArray);
-                            String mensajeCedulaActualizar = "<html><body style='width: 250px; font-family: Arial, sans-serif;'>" + "<h1 style='text-align: center; margin-top: 10px;'>Menú BarberShop</h1>" + "<hr style='border-top: 2px solid #ccc;'>" + "<div style='display: flex; justify-content: center;'>" + "<ul style='list-style-type: none; padding: 0; text-align: left;'>" + "<li style='margin-bottom: 10px;'>Ingrese la cedula del barbero que desea actualizar </li>" + "</ul></div></body></html>";
-                            String cedulavieja = (String) JOptionPane.showInputDialog(null, mensajeCedulaActualizar, "Menú Administracion Personal - Actualizar Barbero", JOptionPane.PLAIN_MESSAGE, null, null, null);
-                            if (cedulavieja == null) {
-                                JOptionPane.showMessageDialog(null, "Error: El campo es obligatorio.", "Error", JOptionPane.ERROR_MESSAGE);
-                            }
-                            Barbero.actualizarBarbero(barberoArray, cedulavieja);
-                        } else {
-                            JOptionPane.showMessageDialog(null, "Error: No hay barberos agregados.", "Error", JOptionPane.ERROR_MESSAGE);
-                        }
-                        break;
-                    case "4":
                         if (Barbero.hayBarberosAgregados(barberoArray)) {
                             String mensajeCedulaEliminar = "<html><body style='width: 250px; font-family: Arial, sans-serif;'>" + "<h1 style='text-align: center; margin-top: 10px;'>Menú BarberShop</h1>" + "<hr style='border-top: 2px solid #ccc;'>" + "<div style='display: flex; justify-content: center;'>" + "<ul style='list-style-type: none; padding: 0; text-align: left;'>" + "<li style='margin-bottom: 10px;'>Ingrese la cedula del barbero que desea eliminar </li>" + "</ul></div></body></html>";
                             String mensajeListaBarberos = "<html><body style='width: 250px; font-family: Arial, sans-serif;'>" + "<h1 style='text-align: center; margin-top: 10px;'>Menú BarberShop</h1>" + "<hr style='border-top: 2px solid #ccc;'>" + "<div style='display: flex; justify-content: center;'>" + "<div style='background-color: #f2f2f2; padding: 20px; border-radius: 5px;'>" + "<h3 style='text-align: center; margin-top: 10px; color: #333;'>Se le mostrará la lista de barberos</h3>" + "<p style='text-align: center; margin-top: 10px; color: #333;'>Por favor, tome nota de la cédula del barbero que desea eliminar.</p>" + "<div style='display: flex; justify-content: center;'>" + "<ul style='list-style-type: none; padding: 0; text-align: left;'>";
@@ -152,7 +136,7 @@ public class SC202_2C2023_G1 {
                         }
 
                         break;
-                    case "5":
+                    case "4":
                         repetir = false;
                         break;
                     default:

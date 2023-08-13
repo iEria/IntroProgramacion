@@ -6,9 +6,6 @@ package Objetos;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.DayOfWeek;
-import java.time.LocalDate;
-import java.time.YearMonth;
 import java.util.Calendar;
 import java.util.Date;
 import javax.swing.JOptionPane;
@@ -27,7 +24,6 @@ public class ReservacionClientes {
     public String HoraFinal;
     public int idBarbero;
     public String DiaCita;
-    /*Hay que buscar porque deberia ser de tipo date o algo similar*/
     public static int posicion = 0;
 
     /*Get and Set del atributo ID*/
@@ -212,7 +208,7 @@ public class ReservacionClientes {
 
             }
 
-            MostrarCalendario();
+            
             String DiaCita = (String) JOptionPane.showInputDialog(null, mensajeDiaCita, "Menú Reservación de espacios - Agregar Reservacion", JOptionPane.PLAIN_MESSAGE, null, null, null);
             boolean esFechaValida = validarFecha(DiaCita, "dd/MM/yyyy");
             if (!esFechaValida) {
@@ -412,56 +408,6 @@ public class ReservacionClientes {
             }
         }
         return false;
-    }
-
-    public static void MostrarCalendario() {
-
-        // Solicitar mes y año al usuario
-        int monthNumber = Integer.parseInt(JOptionPane.showInputDialog("Ingrese el número del mes (1-12):"));
-        int year = Integer.parseInt(JOptionPane.showInputDialog("Ingrese el año:"));
-
-        // Crear objeto YearMonth y LocalDate
-        YearMonth yearMonth = YearMonth.of(year, monthNumber);
-        LocalDate startDate = yearMonth.atDay(1);
-        int daysInMonth = yearMonth.lengthOfMonth();
-        DayOfWeek firstDayOfWeek = startDate.getDayOfWeek();
-        int offset = firstDayOfWeek.getValue() % 7; // Ajuste para comenzar en domingo (1)
-
-        // Crear el contenido HTML del calendario
-        StringBuilder htmlContent = new StringBuilder();
-        htmlContent.append("<html><body style='font-family: Arial, sans-serif;'>");
-        htmlContent.append("<h1 style='text-align: center;'>Calendario para ").append(yearMonth.getMonth()).append(" ").append(year).append("</h1>");
-        htmlContent.append("<p style='text-align: center;'>Seleccione un dia del mes que desea para su cita<p/>");
-        htmlContent.append("<table style='border-collapse: collapse;'>");
-        htmlContent.append("<tr><th>DOM</th><th>LUN</th><th>MAR</th><th>MIE</th><th>JUE</th><th>VIE</th><th>SAB</th></tr>");
-
-        // Espacios en blanco hasta el primer día de la semana
-        htmlContent.append("<tr>");
-        for (int i = 0; i < offset; i++) {
-            htmlContent.append("<td style='padding: 8px; border: 1px solid #ccc;'></td>");
-        }
-
-        // Días del mes
-        for (int day = 1; day <= daysInMonth; day++) {
-            htmlContent.append("<td style='padding: 8px; border: 1px solid #ccc;'>").append(day).append("</td>");
-
-            if (startDate.getDayOfWeek().getValue() % 7 == 6) { // Sábado (6)
-                htmlContent.append("</tr><tr>");
-            }
-
-            startDate = startDate.plusDays(1);
-        }
-
-        // Salto de línea final si el último día del mes no es sábado
-        if (startDate.getDayOfWeek().getValue() % 7 != 0) { // Domingo (0)
-            htmlContent.append("<td style='padding: 8px; border: 1px solid #ccc;' colspan='").append(7 - startDate.getDayOfWeek().getValue()).append("'></td>");
-        }
-
-        htmlContent.append("</tr></table></body></html>");
-
-        // Mostrar el calendario utilizando JOptionPane
-        JOptionPane.showMessageDialog(null, htmlContent.toString(), "Calendario", JOptionPane.INFORMATION_MESSAGE);
-
     }
 
     public static boolean validarFecha(String fecha, String formato) {
