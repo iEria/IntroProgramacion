@@ -499,15 +499,23 @@ public class ReservacionClientes {
             Date date = diaformato.parse(fecha);
 
             // Obtener la fecha actual
-            Calendar cal = Calendar.getInstance();
-            int mesActual = cal.get(Calendar.MONTH);
+            Calendar calActual = Calendar.getInstance();
 
-            // Obtener el mes de la fecha ingresada
-            cal.setTime(date);
-            int mesIngresado = cal.get(Calendar.MONTH);
+            // Obtener la fecha ingresada
+            Calendar calIngresada = Calendar.getInstance();
+            calIngresada.setTime(date);
 
-            // Validar si el mes ingresado es posterior o igual al mes actual
-            return mesIngresado >= mesActual;
+            // Obtener el año y el mes actual
+            int anoActual = calActual.get(Calendar.YEAR);
+            int mesActual = calActual.get(Calendar.MONTH);
+
+            // Obtener el año y el mes de la fecha ingresada
+            int anoIngresado = calIngresada.get(Calendar.YEAR);
+            int mesIngresado = calIngresada.get(Calendar.MONTH);
+
+            // Validar si el año ingresado es posterior al año actual
+            // o si es el mismo año pero el mes ingresado es posterior
+            return (anoIngresado > anoActual) || (anoIngresado == anoActual && mesIngresado >= mesActual);
         } catch (ParseException e) {
             return false;
         }
