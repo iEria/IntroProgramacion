@@ -176,15 +176,15 @@ public class ReservacionClientes {
             String NombreCliente = (String) JOptionPane.showInputDialog(null, mensajeNombreCliente, "Menú Reservación de espacios - Agregar Reservacion", JOptionPane.PLAIN_MESSAGE, null, null, null);
             String ApellidosCliente = (String) JOptionPane.showInputDialog(null, mensajeApellidosCliente, "Menú Reservación de espacios - Agregar Reservacion", JOptionPane.PLAIN_MESSAGE, null, null, null);
             String CedulaCliente = (String) JOptionPane.showInputDialog(null, mensajeCedulaCliente, "Menú Reservación de espacios - Agregar Reservacion", JOptionPane.PLAIN_MESSAGE, null, null, null);
-            if (CedulaCliente.length()!=9){
-            JOptionPane.showMessageDialog(null, "No tiene los digitos suficientes.", "Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
+            if (CedulaCliente.length() != 9) {
+                JOptionPane.showMessageDialog(null, "No tiene los digitos suficientes.", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
             String TelefonoCliente = (String) JOptionPane.showInputDialog(null, mensajeTelefonoCliente, "Menú Reservación de espacios - Agregar Reservacion", JOptionPane.PLAIN_MESSAGE, null, null, null);
-            if (TelefonoCliente.length()!=8){
-            JOptionPane.showMessageDialog(null, "No tiene los digitos suficientes.", "Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
+            if (TelefonoCliente.length() != 8) {
+                JOptionPane.showMessageDialog(null, "No tiene los digitos suficientes.", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
             //Estaba intntando hacer como las horas pero que sean con el array de barberos que hay
             int count = 0;
             for (Barbero barbero : barberoArray) {
@@ -215,7 +215,6 @@ public class ReservacionClientes {
 
             }
 
-            
             String DiaCita = (String) JOptionPane.showInputDialog(null, mensajeDiaCita, "Menú Reservación de espacios - Agregar Reservacion", JOptionPane.PLAIN_MESSAGE, null, null, null);
             boolean esFechaValida = validarFecha(DiaCita, "dd/MM/yyyy");
             if (!esFechaValida) {
@@ -352,23 +351,98 @@ public class ReservacionClientes {
 
     }
 
-    public static boolean mostrarReservacionClientesPorDia(ReservacionClientes[] ReservacionClientesArray, String diaCita) {
+    public static boolean mostrarReservacionClientesPorDia(ReservacionClientes[] ReservacionClientesArray, String diaCita, Barbero[] barberoArray) {
         String reservacionClientesInfo = "";
         boolean reservacionesEncontradas = false;
+        int count = 0;
+        for (Barbero barbero : barberoArray) {
+            if (barbero != null) {
+                count++;
+            }
+        }
 
         for (int i = 0; i < ReservacionClientesArray.length; i++) {
             ReservacionClientes reservacionClientes = ReservacionClientesArray[i];
-            if (reservacionClientes != null && reservacionClientes.getDiaCita().equals(diaCita)) {
-                reservacionesEncontradas = true;
-                reservacionClientesInfo += "ID: " + reservacionClientes.getid() + "<br>";
-                reservacionClientesInfo += "Nombre: " + reservacionClientes.getNombreCliente() + "<br>";
-                reservacionClientesInfo += "Apellidos: " + reservacionClientes.getApellidosCliente() + "<br>";
-                reservacionClientesInfo += "Cédula: " + reservacionClientes.getCedulaCliente() + "<br>";
-                reservacionClientesInfo += "Teléfono: " + reservacionClientes.getTelefonoCliente() + "<br>";
-                reservacionClientesInfo += "Horario Inicio Cita: " + reservacionClientes.getHoraInicio() + "<br>";
-                reservacionClientesInfo += "Horario Final Cita: " + reservacionClientes.getHoraFinal() + "<br>";
-                reservacionClientesInfo += "Día de la cita: " + reservacionClientes.getDiaCita() + "<br>";
-                reservacionClientesInfo += "------------------<br>";
+
+            if (reservacionClientes != null) {
+                String NombreBarbero = "";
+                for (int x = 0; x < count; x++) {
+                    if (barberoArray[x].getid() == reservacionClientes.getIdBarbero()) {
+                        NombreBarbero = barberoArray[x].getNombre();
+                    }
+
+                    if (reservacionClientes != null && reservacionClientes.getDiaCita().equals(diaCita)) {
+                        reservacionesEncontradas = true;
+                        reservacionClientesInfo += "ID: " + reservacionClientes.getid() + "<br>";
+                        reservacionClientesInfo += "Nombre: " + reservacionClientes.getNombreCliente() + "<br>";
+                        reservacionClientesInfo += "Apellidos: " + reservacionClientes.getApellidosCliente() + "<br>";
+                        reservacionClientesInfo += "Cédula: " + reservacionClientes.getCedulaCliente() + "<br>";
+                        reservacionClientesInfo += "Teléfono: " + reservacionClientes.getTelefonoCliente() + "<br>";
+                        reservacionClientesInfo += "Horario Inicio Cita: " + reservacionClientes.getHoraInicio() + "<br>";
+                        reservacionClientesInfo += "Horario Final Cita: " + reservacionClientes.getHoraFinal() + "<br>";
+                        reservacionClientesInfo += "Día de la cita: " + reservacionClientes.getDiaCita() + "<br>";
+                        reservacionClientesInfo += "Nombre Barbero seleccionado es : " + NombreBarbero + "<br>";
+                        reservacionClientesInfo += "------------------<br>";
+                    }
+                }
+            }
+        }
+
+        if (reservacionesEncontradas) {
+            String mensaje = "<html><body style='width: 300px; font-family: Arial, sans-serif;'>"
+                    + "<h1 style='text-align: center; margin-top: 10px;'>Menú BarberShop</h1>"
+                    + "<hr style='border-top: 2px solid #ccc;'>"
+                    + "<div style='display: flex; justify-content: center;'>"
+                    + "<div style='background-color: #e6f4e6; padding: 20px; border-radius: 5px;'>"
+                    + "<p style='text-align: left; margin-top: 10px;'>"
+                    + reservacionClientesInfo
+                    + "</p>"
+                    + "</div></div></body></html>";
+
+            JOptionPane.showMessageDialog(null, mensaje);
+        } else {
+            JOptionPane.showMessageDialog(null, "No hay citas para el día ingresado.", "Información", JOptionPane.INFORMATION_MESSAGE);
+            return false;
+        }
+        return true;
+    }
+
+    public static boolean mostrarReservacionClientesPorDiayBarbero(ReservacionClientes[] ReservacionClientesArray, String diaCita, Barbero[] barberoArray, int IdBarberoRecibido) {
+        String reservacionClientesInfo = "";
+        boolean reservacionesEncontradas = false;
+        int count = 0;
+        for (Barbero barbero : barberoArray) {
+            if (barbero != null) {
+                count++;
+            }
+        }
+
+        for (int i = 0; i < ReservacionClientesArray.length; i++) {
+            ReservacionClientes reservacionClientes = ReservacionClientesArray[i];
+
+            if (reservacionClientes != null) {
+                String NombreBarbero = "";
+                for (int x = 0; x < count; x++) {
+                    if (barberoArray[x].getid() == reservacionClientes.getIdBarbero()) {
+                        NombreBarbero = barberoArray[x].getNombre();
+                    }
+
+                    if (reservacionClientes != null && reservacionClientes.getDiaCita().equals(diaCita)) {
+                        if (reservacionClientes.getIdBarbero() == IdBarberoRecibido) {
+                            reservacionesEncontradas = true;
+                            reservacionClientesInfo += "ID: " + reservacionClientes.getid() + "<br>";
+                            reservacionClientesInfo += "Nombre: " + reservacionClientes.getNombreCliente() + "<br>";
+                            reservacionClientesInfo += "Apellidos: " + reservacionClientes.getApellidosCliente() + "<br>";
+                            reservacionClientesInfo += "Cédula: " + reservacionClientes.getCedulaCliente() + "<br>";
+                            reservacionClientesInfo += "Teléfono: " + reservacionClientes.getTelefonoCliente() + "<br>";
+                            reservacionClientesInfo += "Horario Inicio Cita: " + reservacionClientes.getHoraInicio() + "<br>";
+                            reservacionClientesInfo += "Horario Final Cita: " + reservacionClientes.getHoraFinal() + "<br>";
+                            reservacionClientesInfo += "Día de la cita: " + reservacionClientes.getDiaCita() + "<br>";
+                            reservacionClientesInfo += "Nombre Barbero seleccionado es : " + NombreBarbero + "<br>";
+                            reservacionClientesInfo += "------------------<br>";
+                        }
+                    }
+                }
             }
         }
 

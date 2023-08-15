@@ -173,7 +173,7 @@ public class SC202_2C2023_G1 {
                 switch (opcion) {
                     case "1":
                         if (Barbero.hayBarberosAgregados(barberoArray)) {
-                            ReservacionClientes.CrearReservacionClientes(ReservacionClientesArray ,barberoArray );
+                            ReservacionClientes.CrearReservacionClientes(ReservacionClientesArray, barberoArray);
                         } else {
                             JOptionPane.showMessageDialog(null, "Error: No hay barberos agregados.", "Error", JOptionPane.ERROR_MESSAGE);
                         }
@@ -188,15 +188,29 @@ public class SC202_2C2023_G1 {
                                 switch (opcion2) {
                                     case "1":
                                         String DiaCita = (String) JOptionPane.showInputDialog(null, "Ingrese el dia con el formato (dd/mm/yyyy) de las citas que quiere mostrar", "Menú Reservación de espacios - Mostar Reservacion", JOptionPane.PLAIN_MESSAGE, null, null, null);
+                                        boolean esFechaValida = ReservacionClientes.validarFecha(DiaCita, "dd/MM/yyyy");
+                                        if (!esFechaValida) {
+                                            String mensajeError = "<html><body style='width: 250px; font-family: Arial, sans-serif;'>"
+                                                    + "<h1 style='text-align: center; margin-top: 10px;'>Menú BarberShop</h1>"
+                                                    + "<hr style='border-top: 2px solid #ccc;'>"
+                                                    + "<div style='display: flex; justify-content: center;'>"
+                                                    + "<div style='background-color: #f4e6e6; padding: 20px; border-radius: 5px;'>"
+                                                    + "<h3 style='text-align: center; margin-top: 10px; color: #FF0000;'>Error en el registro</h3>"
+                                                    + "<p style='text-align: center; margin-top: 10px; color: #333;'>La fecha tiene el formato incorrecto o ingreso un mes actual del que estamos.</p>"
+                                                    + "<div style='display: flex; justify-content: center;'>"
+                                                    + "</div></div></div></body></html>";
+                                            JOptionPane.showMessageDialog(null, mensajeError);
+                                            return;
+                                        }
                                         if (DiaCita == null || DiaCita.isEmpty()) {
                                             JOptionPane.showMessageDialog(null, "Error: El campo es obligatorio.", "Error", JOptionPane.ERROR_MESSAGE);
                                         } else {
-                                            ReservacionClientes.mostrarReservacionClientesPorDia(ReservacionClientesArray, DiaCita);
+                                            ReservacionClientes.mostrarReservacionClientesPorDia(ReservacionClientesArray, DiaCita, barberoArray);
                                         }
 
                                         break;
                                     case "2":
-                                        ReservacionClientes.mostrarReservacionClientes(ReservacionClientesArray , barberoArray);
+                                        ReservacionClientes.mostrarReservacionClientes(ReservacionClientesArray, barberoArray);
                                         break;
                                     case "3":
                                         repetir = false;
@@ -252,11 +266,62 @@ public class SC202_2C2023_G1 {
                         if (Barbero.hayBarberosAgregados(barberoArray)) {
 
                             if (ReservacionClientes.hayClientesAgregados(ReservacionClientesArray)) {
-                                String mensajeCedulaEliminar = "<html><body style='width: 250px; font-family: Arial, sans-serif;'>" + "<h1 style='text-align: center; margin-top: 10px;'>Menú BarberShop</h1>" + "<hr style='border-top: 2px solid #ccc;'>" + "<div style='display: flex; justify-content: center;'>" + "<ul style='list-style-type: none; padding: 0; text-align: left;'>" + "<li style='margin-bottom: 10px;'>Ingrese el ID de la reservacion que desea devolver </li>" + "</ul></div></body></html>";
+                                String mensajeIDEliminar = "<html><body style='width: 250px; font-family: Arial, sans-serif;'>" + "<h1 style='text-align: center; margin-top: 10px;'>Menú BarberShop</h1>" + "<hr style='border-top: 2px solid #ccc;'>" + "<div style='display: flex; justify-content: center;'>" + "<ul style='list-style-type: none; padding: 0; text-align: left;'>" + "<li style='margin-bottom: 10px;'>Ingrese el ID de la reservacion que desea devolver </li>" + "</ul></div></body></html>";
                                 String mensajeListaReservaciones = "<html><body style='width: 250px; font-family: Arial, sans-serif;'>" + "<h1 style='text-align: center; margin-top: 10px;'>Menú BarberShop</h1>" + "<hr style='border-top: 2px solid #ccc;'>" + "<div style='display: flex; justify-content: center;'>" + "<div style='background-color: #f2f2f2; padding: 20px; border-radius: 5px;'>" + "<h3 style='text-align: center; margin-top: 10px; color: #333;'>Se le mostrará la lista de las Reservaciones</h3>" + "<p style='text-align: center; margin-top: 10px; color: #333;'>Por favor, tome nota del id de la reservacion que desea devolver.</p>" + "<div style='display: flex; justify-content: center;'>" + "<ul style='list-style-type: none; padding: 0; text-align: left;'>";
                                 JOptionPane.showMessageDialog(null, mensajeListaReservaciones);
-                                ReservacionClientes.mostrarReservacionClientes(ReservacionClientesArray , barberoArray);
-                                String id = (String) JOptionPane.showInputDialog(null, mensajeCedulaEliminar, "Menú Administracion Personal", JOptionPane.PLAIN_MESSAGE, iconoAjustado, null, null);
+
+                                String DiaCita = (String) JOptionPane.showInputDialog(null, "Ingrese el dia con el formato (dd/mm/yyyy) de las citas que quiere mostrar", "Menú Reservación de espacios - Mostar Reservacion", JOptionPane.PLAIN_MESSAGE, null, null, null);
+                                boolean esFechaValida = ReservacionClientes.validarFecha(DiaCita, "dd/MM/yyyy");
+                                if (!esFechaValida) {
+                                    String mensajeError = "<html><body style='width: 250px; font-family: Arial, sans-serif;'>"
+                                            + "<h1 style='text-align: center; margin-top: 10px;'>Menú BarberShop</h1>"
+                                            + "<hr style='border-top: 2px solid #ccc;'>"
+                                            + "<div style='display: flex; justify-content: center;'>"
+                                            + "<div style='background-color: #f4e6e6; padding: 20px; border-radius: 5px;'>"
+                                            + "<h3 style='text-align: center; margin-top: 10px; color: #FF0000;'>Error en el registro</h3>"
+                                            + "<p style='text-align: center; margin-top: 10px; color: #333;'>La fecha tiene el formato incorrecto o ingreso un mes actual del que estamos.</p>"
+                                            + "<div style='display: flex; justify-content: center;'>"
+                                            + "</div></div></div></body></html>";
+                                    JOptionPane.showMessageDialog(null, mensajeError);
+                                    return;
+                                }
+
+                                if (DiaCita == null || DiaCita.isEmpty()) {
+                                    JOptionPane.showMessageDialog(null, "Error: El campo es obligatorio.", "Error", JOptionPane.ERROR_MESSAGE);
+                                } else {
+                                    int count = 0;
+                                    for (Barbero barbero : barberoArray) {
+                                        if (barbero != null) {
+                                            count++;
+                                        }
+                                    }
+
+                                    // Crear un array de los nombres de los barberos no nulos
+                                    String[] nombresBarberos = new String[count];
+                                    int x = 0;
+                                    for (Barbero barbero : barberoArray) {
+                                        if (barbero != null) {
+                                            nombresBarberos[x] = barbero.getNombre();
+                                            x++;
+                                        }
+                                    }
+
+                                    int indiceNombreBarbero = JOptionPane.showOptionDialog(null, "Seleccione el nombre del barbero", "Menú de opciones",
+                                            JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null, nombresBarberos, nombresBarberos[0]);
+                                    int IdBarberoSeleccionado = 0;
+
+                                    String nombre = nombresBarberos[indiceNombreBarbero];
+                                    for (int z = 0; z < count; z++) {
+                                        if (nombre == barberoArray[z].getNombre()) {
+                                            IdBarberoSeleccionado = barberoArray[z].getid();
+                                        }
+
+                                    }
+
+                                    ReservacionClientes.mostrarReservacionClientesPorDiayBarbero(ReservacionClientesArray, DiaCita, barberoArray, IdBarberoSeleccionado);
+                                }
+
+                                String id = (String) JOptionPane.showInputDialog(null, mensajeIDEliminar, "Menú Administracion Personal", JOptionPane.PLAIN_MESSAGE, iconoAjustado, null, null);
                                 if (id != null) {
                                     try {
                                         int idparseado = Integer.parseInt(id);
@@ -290,4 +355,3 @@ public class SC202_2C2023_G1 {
         }
     }
 }
-//:)
