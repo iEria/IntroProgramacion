@@ -20,7 +20,6 @@ public class Barbero {
     public String HoraAlmuerzoInicio;
     public String HoraAlmuerzoFinal;
     public static int posicion = 0;
-    public static Barbero[] barberoArray = new Barbero[6];
 
     public String getHoraAlmuerzoInicio() {
         return HoraAlmuerzoInicio;
@@ -139,33 +138,89 @@ public class Barbero {
         JOptionPane.showMessageDialog(null, mensajeDatosBarbero);
     }
 
-    public static void CrearBarbero(int id, String cedula, String nombre, String apellidos, String telefono, String horaAlmuerzoInicio, String horaAlmuerzoFinal) {
+    public static void CrearBarbero(Barbero[] barbero) {
         if (posicion >= 5) {
             mostrarMensajeError();
             return;
         }
-        Barbero nuevoBarbero = new Barbero();
-        nuevoBarbero.setid(id);
-        nuevoBarbero.setNombre(nombre);
-        nuevoBarbero.setApellidos(apellidos);
-        nuevoBarbero.setCedula(cedula);
-        nuevoBarbero.setTelefono(telefono);
-        nuevoBarbero.setHoraAlmuerzoInicio(horaAlmuerzoInicio);
-        nuevoBarbero.setHoraAlmuerzoFinal(horaAlmuerzoFinal);
+        boolean comenzar = true;
+        String mensajeNombre = "<html><body style='width: 250px; font-family: Arial, sans-serif;'>" + "<h1 style='text-align: center; margin-top: 10px;'>Menú BarberShop</h1>" + "<hr style='border-top: 2px solid #ccc;'>" + "<div style='display: flex; justify-content: center;'>" + "<ul style='list-style-type: none; padding: 0; text-align: left;'>" + "<li style='margin-bottom: 10px;'>Ingrese el nombre del nuevo barbero </li>" + "</ul></div></body></html>";
+        String mensajeApellidos = "<html><body style='width: 250px; font-family: Arial, sans-serif;'>" + "<h1 style='text-align: center; margin-top: 10px;'>Menú BarberShop</h1>" + "<hr style='border-top: 2px solid #ccc;'>" + "<div style='display: flex; justify-content: center;'>" + "<ul style='list-style-type: none; padding: 0; text-align: left;'>" + "<li style='margin-bottom: 10px;'>Ingrese los apellidos del nuevo barbero </li>" + "</ul></div></body></html>";
+        String mensajeCedula = "<html><body style='width: 250px; font-family: Arial, sans-serif;'>" + "<h1 style='text-align: center; margin-top: 10px;'>Menú BarberShop</h1>" + "<hr style='border-top: 2px solid #ccc;'>" + "<div style='display: flex; justify-content: center;'>" + "<ul style='list-style-type: none; padding: 0; text-align: left;'>" + "<li style='margin-bottom: 10px;'>Ingrese la cedula del nuevo barbero </li>" + "</ul></div></body></html>";
+        String mensajeTelefono = "<html><body style='width: 250px; font-family: Arial, sans-serif;'>" + "<h1 style='text-align: center; margin-top: 10px;'>Menú BarberShop</h1>" + "<hr style='border-top: 2px solid #ccc;'>" + "<div style='display: flex; justify-content: center;'>" + "<ul style='list-style-type: none; padding: 0; text-align: left;'>" + "<li style='margin-bottom: 10px;'>Ingrese el telefono del nuevo barbero </li>" + "</ul></div></body></html>";
 
-        barberoArray[posicion] = nuevoBarbero;
-        posicion = (posicion + 1);
+        String nombreBarbero = (String) JOptionPane.showInputDialog(null, mensajeNombre, "Menú Administracion Personal - Nuevo Barbero", JOptionPane.PLAIN_MESSAGE, null, null, null);
+        String nombreApellidos = (String) JOptionPane.showInputDialog(null, mensajeApellidos, "Menú Administracion Personal - Nuevo Barbero", JOptionPane.PLAIN_MESSAGE, null, null, null);
+        String cedulaBarbero = (String) JOptionPane.showInputDialog(null, mensajeCedula, "Menú Administracion Personal - Nuevo Barbero", JOptionPane.PLAIN_MESSAGE, null, null, null);
+        if (cedulaBarbero.length() != 9) {
+            JOptionPane.showMessageDialog(null, "No tiene los digitos suficientes.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        String telefonoBarbero = (String) JOptionPane.showInputDialog(null, mensajeTelefono, "Menú Administracion Personal - Nuevo Barbero", JOptionPane.PLAIN_MESSAGE, null, null, null);
+        if (telefonoBarbero.length() != 8) {
+            JOptionPane.showMessageDialog(null, "No tiene los digitos suficientes.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        String[] options = {"8:00 AM", "9:00 AM", "10:00 AM", "11:00 AM", "12:00 MD", "1:00 PM", "2:00 PM", "3:00 PM", "4:00 PM", "5:00 PM", "6:00 PM"};
 
-        mostrarMensajeExito();
-        mostrarMensajeDatosBarbero(nuevoBarbero);
+        int indiceHoraInicio = JOptionPane.showOptionDialog(null, "Seleccione la hora inicio del almuerzo del Barbero", "Menú de opciones",
+                JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null, options, options[0]);
 
+        String horaAlmuerzoBarberoI = options[indiceHoraInicio];
+
+        // Obtener las opciones para la hora final
+        String[] opcionesHoraFinal = new String[options.length - indiceHoraInicio - 1];
+        for (int i = indiceHoraInicio + 1; i < options.length; i++) {
+            opcionesHoraFinal[i - indiceHoraInicio - 1] = options[i];
+        }
+
+        int indiceHoraFinal = JOptionPane.showOptionDialog(null, "Seleccione la hora final del almuerzo del Barbero", "Menú de opciones",
+                JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null, opcionesHoraFinal, opcionesHoraFinal[0]);
+
+        String horaAlmuerzoBarberoF = opcionesHoraFinal[indiceHoraFinal];
+        boolean campoInvalido = nombreBarbero.isEmpty() || nombreApellidos.isEmpty() || cedulaBarbero.isEmpty() || telefonoBarbero.isEmpty()
+                || horaAlmuerzoBarberoI.isEmpty() || horaAlmuerzoBarberoF.isEmpty();
+        while (comenzar) {
+            if (!campoInvalido) {
+                // Incrementar el ID para el próximo barbero
+                int maxId = 0;
+                for (int i = 0; i < posicion; i++) {
+                    if (barbero[i] != null && barbero[i].getid() > maxId) {
+                        maxId = barbero[i].getid();
+                    }
+                }
+                int id = maxId + 1;
+
+                // Crear el nuevo barbero con el ID actual y la información proporcionada
+                Barbero nuevoBarbero = new Barbero();
+                nuevoBarbero.setid(id);
+                nuevoBarbero.setNombre(nombreBarbero);
+                nuevoBarbero.setApellidos(nombreApellidos);
+                nuevoBarbero.setCedula(cedulaBarbero);
+                nuevoBarbero.setTelefono(telefonoBarbero);
+                nuevoBarbero.setHoraAlmuerzoInicio(horaAlmuerzoBarberoI);
+                nuevoBarbero.setHoraAlmuerzoFinal(horaAlmuerzoBarberoF);
+                barbero[posicion] = nuevoBarbero;
+                posicion = (posicion + 1);
+
+                mostrarMensajeExito();
+                mostrarMensajeDatosBarbero(nuevoBarbero);
+
+                comenzar = false;
+            } else {
+                // Mostrar mensaje de error si al menos uno de los campos es nulo o está en blanco
+                JOptionPane.showMessageDialog(null, "Error: Todos los campos son obligatorios.", "Error", JOptionPane.ERROR_MESSAGE);
+                comenzar = false;
+            }
+        }
     }
 
-    public static void mostrarBarberos() {
+    public static void mostrarBarberos(Barbero[] barberoArray) {
         String barberosInfo = "";
         for (int i = 0; i < barberoArray.length; i++) {
             Barbero barbero = barberoArray[i];
             if (barbero != null) {
+                barberosInfo += "ID: " + barbero.getid() + "<br>";
                 barberosInfo += "Nombre: " + barbero.getNombre() + "<br>";
                 barberosInfo += "Apellidos: " + barbero.getApellidos() + "<br>";
                 barberosInfo += "Cédula: " + barbero.getCedula() + "<br>";
@@ -190,51 +245,26 @@ public class Barbero {
 
     }
 
-    public static void eliminarBarbero(String cedula) {
-        boolean cedulaEncontrada = false;
+    public static void eliminarBarbero(Barbero[] barberoArray, int id) {
+        boolean IDEncontrado = false;
 
         for (int i = 0; i < barberoArray.length; i++) {
-            if (barberoArray[i] != null && barberoArray[i].getCedula().equals(cedula)) {
-                barberoArray[i] = null;
-                cedulaEncontrada = true;
-                mostrarMensajeExitoEliminacion();
-                break;
+            if (barberoArray[i] != null) {
+                if (barberoArray[i].getid() == id) {
+                    barberoArray[i] = null;
+                    IDEncontrado = true;
+                    mostrarMensajeExitoEliminacion();
+                    break;
+                }
             }
         }
 
-        if (!cedulaEncontrada) {
-            JOptionPane.showMessageDialog(null, "Error: No se encontro la cedula.", "Error", JOptionPane.ERROR_MESSAGE);
+        if (!IDEncontrado) {
+            JOptionPane.showMessageDialog(null, "Error: No se encontro el ID.", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
-    public static void actualizarBarbero(int id, String cedula, String nombre, String apellidos, String telefono, String horaAlmuerzoInicio, String horaAlmuerzoFinal ,String cedulavieja) {
-        boolean cedulaEncontrada = false;
-
-        for (int i = 0; i < barberoArray.length; i++) {
-            if (barberoArray[i] != null && barberoArray[i].getCedula().equals(cedulavieja)) {
-                Barbero nuevoBarbero = new Barbero();
-                int idvieja = barberoArray[i].getid();
-                nuevoBarbero.setid(idvieja);
-                nuevoBarbero.setNombre(nombre);
-                nuevoBarbero.setApellidos(apellidos);
-                nuevoBarbero.setCedula(cedula);
-                nuevoBarbero.setTelefono(telefono);
-                nuevoBarbero.setHoraAlmuerzoInicio(horaAlmuerzoInicio);
-                nuevoBarbero.setHoraAlmuerzoFinal(horaAlmuerzoFinal);
-                
-                
-                cedulaEncontrada = true;
-                barberoArray[i] =nuevoBarbero ;
-                break;
-            }
-        }
-
-        if (!cedulaEncontrada) {
-            JOptionPane.showMessageDialog(null, "Error: No se encontro la cedula.", "Error", JOptionPane.ERROR_MESSAGE);
-        }
-    }
-
-    public static boolean hayBarberosAgregados() {
+    public static boolean hayBarberosAgregados(Barbero[] barberoArray) {
         for (Barbero barbero : barberoArray) {
             if (barbero != null) {
                 return true;
