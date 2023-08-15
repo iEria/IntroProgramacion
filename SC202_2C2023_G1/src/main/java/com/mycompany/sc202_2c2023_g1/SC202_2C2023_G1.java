@@ -36,7 +36,7 @@ public class SC202_2C2023_G1 {
 
             String opcion = (String) JOptionPane.showInputDialog(null, mensaje, "Menú Principal", JOptionPane.PLAIN_MESSAGE, iconoAjustado, null, null);
             if (opcion == null) {
-                // Si se presiona el botón de cerrar o cancelar, se termina el ciclo caritafeliz
+                // Si se presiona el botón de cerrar o cancelar, se termina el ciclo 
                 break;
             }
             if (ValidacionNumero(opcion)) {
