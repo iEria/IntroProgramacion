@@ -87,8 +87,8 @@ public class SC202_2C2023_G1 {
                     + "<ul style='list-style-type: none; padding: 0; text-align: left;'>"
                     + "<li style='margin-bottom: 10px;'><strong>Opción 1:</strong> Agregar Barbero </li>"
                     + "<li style='margin-bottom: 10px;'><strong>Opción 2:</strong> Mostrar Barberos </li>"
-                    + "<li style='margin-bottom: 10px;'><strong>Opción 4:</strong> Eliminar Barbero</li>"
-                    + "<li style='margin-bottom: 10px;'><strong>Opción 5:</strong> Atras </li>"
+                    + "<li style='margin-bottom: 10px;'><strong>Opción 3:</strong> Eliminar Barbero</li>"
+                    + "<li style='margin-bottom: 10px;'><strong>Opción 4:</strong> Atras </li>"
                     + "</ul></div></body></html>";
 
             String iconoBarberia = "C:/Users/corde/Documents/NetBeansProjects/SC202_2C2023_G1/SC202_2C2023_G1/src/main/java/Objetos/Barber.jpg";
