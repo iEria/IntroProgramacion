@@ -41,6 +41,4 @@ public class Agenda {
     public int getidBarbero() {
         return idBarbero;
     }
-    
-    
 }

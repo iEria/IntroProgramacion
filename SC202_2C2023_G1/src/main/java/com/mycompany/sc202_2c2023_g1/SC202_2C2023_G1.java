@@ -1,5 +1,6 @@
 package com.mycompany.sc202_2c2023_g1;
 //git es god
+
 import Objetos.Barbero;
 import Objetos.ReservacionClientes;
 
@@ -51,7 +52,7 @@ public class SC202_2C2023_G1 {
                         SubMenu3(barberoArray, ReservacionClientesArray);
                         break;
                     case "4":
-                        JOptionPane.showMessageDialog(null, "Opcion #4");
+                        SubMenu4(barberoArray, ReservacionClientesArray);
                         break;
                     case "5":
                         repetir = false;
@@ -126,7 +127,7 @@ public class SC202_2C2023_G1 {
                             JOptionPane.showMessageDialog(null, mensajeListaBarberos);
                             Barbero.mostrarBarberos(barberoArray);
                             int id = Integer.parseInt(JOptionPane.showInputDialog(null, mensajeidEliminar));
-                           String idvalidar = String.valueOf(id);
+                            String idvalidar = String.valueOf(id);
                             if (idvalidar == null) {
                                 JOptionPane.showMessageDialog(null, "Error: El campo es obligatorio.", "Error", JOptionPane.ERROR_MESSAGE);
                             }
@@ -353,6 +354,46 @@ public class SC202_2C2023_G1 {
                 JOptionPane.showMessageDialog(null, "No es un número, reintente");
                 repetir = true;
             }
+        }
+    }
+
+    public static void SubMenu4(Barbero[] barberoArray, ReservacionClientes[] ReservacionClientesArray) {
+        boolean repetir = true;
+        while (repetir) {
+            String mensaje = "<html><body style='width: 250px; font-family: Arial, sans-serif;'>" + "<h1 style='text-align: center; margin-top: 10px;'>Menú BarberShop</h1>" + "<hr style='border-top: 2px solid #ccc;'>" + "<div style='display: flex; justify-content: center;'>" + "<ul style='list-style-type: none; padding: 0; text-align: left;'>" + "<li style='margin-bottom: 10px;'><strong>Opción 1:</strong> Mostrar Agenda </li>" + "<li style='margin-bottom: 10px;'><strong>Opción 2:</strong> Atras </li>" + "</ul></div></body></html>";
+
+            String iconoBarberia = "C:/Users/corde/Documents/NetBeansProjects/SC202_2C2023_G1/SC202_2C2023_G1/src/main/java/Objetos/Barber.jpg";
+            ImageIcon iconoOriginal = new ImageIcon(iconoBarberia);
+            // Ajustar el ancho de la imagen al valor deseado
+            int nuevoAncho = 200; // Ancho deseado
+            int nuevoAlto = -1; // Mantener la relación de aspecto original
+            Image imagenEscalada = iconoOriginal.getImage().getScaledInstance(nuevoAncho, nuevoAlto, Image.SCALE_SMOOTH);
+            ImageIcon iconoAjustado = new ImageIcon(imagenEscalada);
+
+            String opcion = (String) JOptionPane.showInputDialog(null, mensaje, "Menú Devolucion de espacios", JOptionPane.PLAIN_MESSAGE, iconoAjustado, null, null);
+            if (opcion == null) {
+                // Si se presiona el botón de cerrar o cancelar, se termina el ciclo
+                break;
+            }
+            if (ValidacionNumero(opcion)) {
+                switch (opcion) {
+                    case "1":
+                        
+                        
+                        
+                        break;
+                    case "2":
+                        repetir = false;
+                        break;
+                    default:
+                        JOptionPane.showMessageDialog(null, "No es una opción válida, reintente");
+                        repetir = true;
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "No es un número, reintente");
+                repetir = true;
+            }
+
         }
     }
 }
