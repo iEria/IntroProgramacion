@@ -144,7 +144,7 @@ public class Agenda {
         
         // Agregar el 13% de IVA al precio
         double iva = precioCorte * 0.13;
-        precioCorte += (int) iva; // Convertir el resultado a entero
+        precioCorte += iva; // Convertir el resultado a entero
         
         return precioCorte;
     }
