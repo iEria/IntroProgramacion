@@ -4,6 +4,9 @@
  */
 package Objetos;
 
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import javax.swing.JOptionPane;
 
 /**
@@ -55,6 +58,8 @@ public class Agenda {
     public static boolean mostrarAgendaBarbero(ReservacionClientes[] ReservacionClientesArray, String diaCita, Barbero[] barberoArray, int IdBarberoRecibido) {
         String reservacionClientesInfo = "";
         boolean reservacionesEncontradas = false;
+        double preciototal = 0 ;
+        
         int count = 0;
         for (Barbero barbero : barberoArray) {
             if (barbero != null) {
@@ -68,12 +73,14 @@ public class Agenda {
             if (reservacionClientes != null) {
                 String NombreBarbero = "";
                 for (int x = 0; x < count; x++) {
+                    
                     if (barberoArray[x].getid() == reservacionClientes.getIdBarbero()) {
                         NombreBarbero = barberoArray[x].getNombre();
                     }
 
                     if (reservacionClientes != null && reservacionClientes.getDiaCita().equals(diaCita)) {
                         if (reservacionClientes.getIdBarbero() == IdBarberoRecibido) {
+                            
                             reservacionesEncontradas = true;
                             reservacionClientesInfo += "ID: " + reservacionClientes.getid() + "<br>";
                             reservacionClientesInfo += "Nombre: " + reservacionClientes.getNombreCliente() + "<br>";
@@ -85,11 +92,13 @@ public class Agenda {
                             reservacionClientesInfo += "Día de la cita: " + reservacionClientes.getDiaCita() + "<br>";
                             reservacionClientesInfo += "Nombre Barbero seleccionado es : " + NombreBarbero + "<br>";
                             reservacionClientesInfo += "------------------<br>";
+                            preciototal += PrecioCorte(diaCita);
                         }
                     }
                 }
             }
         }
+        
 
         if (reservacionesEncontradas) {
             String mensaje = "<html><body style='width: 300px; font-family: Arial, sans-serif;'>"
@@ -100,6 +109,9 @@ public class Agenda {
                     + "<p style='text-align: left; margin-top: 10px;'>"
                     + reservacionClientesInfo
                     + "</p>"
+                    + "<p style='text-align: left; margin-top: 10px;'>"
+                    + "El precio total es de " + preciototal
+                    + "</p>"
                     + "</div></div></body></html>";
 
             JOptionPane.showMessageDialog(null, mensaje);
@@ -108,5 +120,32 @@ public class Agenda {
             return false;
         }
         return true;
+    }
+    
+   public static int PrecioCorte(String DiaCita) {
+        // Convertir la cadena de fecha a un objeto LocalDate
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        LocalDate fechaCita = LocalDate.parse(DiaCita, formatter);
+        
+        // Obtener el día de la semana de la fecha de la cita
+        DayOfWeek diaSemana = fechaCita.getDayOfWeek();
+        
+        // Definir los precios para fin de semana y entre semana
+        int costoCorteFinDeSemana = 3000;
+        int costoCorteEntreSemana = 2500;
+        
+        // Determinar el precio basado en el día de la semana
+        int precioCorte;
+        if (diaSemana == DayOfWeek.SATURDAY || diaSemana == DayOfWeek.SUNDAY) {
+            precioCorte = costoCorteFinDeSemana;
+        } else {
+            precioCorte = costoCorteEntreSemana;
+        }
+        
+        // Agregar el 13% de IVA al precio
+        double iva = precioCorte * 0.13;
+        precioCorte += (int) iva; // Convertir el resultado a entero
+        
+        return precioCorte;
     }
 }
