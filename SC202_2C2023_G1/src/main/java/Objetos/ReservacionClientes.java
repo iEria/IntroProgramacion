@@ -505,19 +505,23 @@ public class ReservacionClientes {
             Calendar calIngresada = Calendar.getInstance();
             calIngresada.setTime(date);
 
-            // Obtener el año y el mes actual
-            int anoActual = calActual.get(Calendar.YEAR);
-            int mesActual = calActual.get(Calendar.MONTH);
+            // Comparar fechas completas (año, mes, día)
+            if (calIngresada.get(Calendar.YEAR) < calActual.get(Calendar.YEAR)) {
+                return false; // El año ingresado es anterior al año actual
+            } else if (calIngresada.get(Calendar.YEAR) == calActual.get(Calendar.YEAR)) {
+                if (calIngresada.get(Calendar.MONTH) < calActual.get(Calendar.MONTH)) {
+                    return false; // El mes ingresado es anterior al mes actual
+                } else if (calIngresada.get(Calendar.MONTH) == calActual.get(Calendar.MONTH)) {
+                    if (calIngresada.get(Calendar.DAY_OF_MONTH) < calActual.get(Calendar.DAY_OF_MONTH)) {
+                        return false; // El día ingresado es anterior al día actual
+                    }
+                }
+            }
 
-            // Obtener el año y el mes de la fecha ingresada
-            int anoIngresado = calIngresada.get(Calendar.YEAR);
-            int mesIngresado = calIngresada.get(Calendar.MONTH);
-
-            // Validar si el año ingresado es posterior al año actual
-            // o si es el mismo año pero el mes ingresado es posterior
-            return (anoIngresado > anoActual) || (anoIngresado == anoActual && mesIngresado >= mesActual);
+            return true; // Todas las validaciones pasaron
         } catch (ParseException e) {
             return false;
         }
     }
+
 }
