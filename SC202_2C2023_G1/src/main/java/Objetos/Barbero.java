@@ -12,14 +12,14 @@ import javax.swing.JOptionPane;
  */
 public class Barbero {
 
-    public int id;
-    public String Cedula;
-    public String Nombre;
-    public String Apellidos;
-    public String Telefono;
-    public String HoraAlmuerzoInicio;
-    public String HoraAlmuerzoFinal;
-    public static int posicion = 0;
+    private int id;
+    private String Cedula;
+    private String Nombre;
+    private String Apellidos;
+    private String Telefono;
+    private String HoraAlmuerzoInicio;
+    private String HoraAlmuerzoFinal;
+    private static int posicion = 0;
 
     public String getHoraAlmuerzoInicio() {
         return HoraAlmuerzoInicio;

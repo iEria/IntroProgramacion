@@ -16,16 +16,16 @@ import javax.swing.JOptionPane;
  */
 public class ReservacionClientes {
 
-    public int id;
-    public String NombreCliente;
-    public String CedulaCliente;
-    public String ApellidosCliente;
-    public String TelefonoCliente;
-    public String HoraInicio;
-    public String HoraFinal;
-    public int idBarbero;
-    public String DiaCita;
-    public static int posicion = 0;
+    private int id;
+    private String NombreCliente;
+    private String CedulaCliente;
+    private String ApellidosCliente;
+    private String TelefonoCliente;
+    private String HoraInicio;
+    private String HoraFinal;
+    private int idBarbero;
+    private String DiaCita;
+    private static int posicion = 0;
 
     /*Get and Set del atributo ID*/
     public void setid(int id) {

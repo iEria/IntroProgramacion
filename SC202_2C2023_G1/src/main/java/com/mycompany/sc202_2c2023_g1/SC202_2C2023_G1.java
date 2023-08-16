@@ -358,7 +358,7 @@ public class SC202_2C2023_G1 {
     }
 
     public static void SubMenu4(Barbero[] barberoArray, ReservacionClientes[] ReservacionClientesArray) {
-        ReservacionClientes[] agendaArray = new ReservacionClientes[30];
+        ReservacionClientes[] AgendaArray = new ReservacionClientes[30];
         boolean repetir = true;
         while (repetir) {
             String mensaje = "<html><body style='width: 250px; font-family: Arial, sans-serif;'>" + "<h1 style='text-align: center; margin-top: 10px;'>Menú BarberShop</h1>" + "<hr style='border-top: 2px solid #ccc;'>" + "<div style='display: flex; justify-content: center;'>" + "<ul style='list-style-type: none; padding: 0; text-align: left;'>" + "<li style='margin-bottom: 10px;'><strong>Opción 1:</strong> Mostrar Agenda </li>" + "<li style='margin-bottom: 10px;'><strong>Opción 2:</strong> Atras </li>" + "</ul></div></body></html>";
