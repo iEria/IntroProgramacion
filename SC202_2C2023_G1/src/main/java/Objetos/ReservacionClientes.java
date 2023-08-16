@@ -166,6 +166,41 @@ public class ReservacionClientes {
         JOptionPane.showMessageDialog(null, mensajeDatosReservacionClientes);
     }
 
+    public static boolean ValidarReservaciones(ReservacionClientes[] ReservacionClientesArray, String DiaCita, int IdBarbero, ReservacionClientes ReservacionNueva) {
+    SimpleDateFormat horaFormato = new SimpleDateFormat("h:mm a", Locale.ENGLISH);
+
+    Calendar HoraInicioMenuCal = Calendar.getInstance();
+    Calendar HoraFinalMenuCal = Calendar.getInstance();
+
+    try {
+        HoraInicioMenuCal.setTime(horaFormato.parse(ReservacionNueva.getHoraInicio()));
+        HoraFinalMenuCal.setTime(horaFormato.parse(ReservacionNueva.getHoraFinal()));
+    } catch (ParseException e) {
+        e.printStackTrace();
+        return false;
+    }
+
+    for (ReservacionClientes ReservacionCliente : ReservacionClientesArray) {
+        if (ReservacionCliente != null && ReservacionCliente.DiaCita.equals(DiaCita) && ReservacionCliente.idBarbero == IdBarbero) {
+            try {
+                Calendar horaInicioSeleccionadaCal = Calendar.getInstance();
+                Calendar horaFinalSeleccionadaCal = Calendar.getInstance();
+                horaInicioSeleccionadaCal.setTime(horaFormato.parse(ReservacionCliente.getHoraInicio()));
+                horaFinalSeleccionadaCal.setTime(horaFormato.parse(ReservacionCliente.getHoraFinal()));
+
+                if (horaInicioSeleccionadaCal.compareTo(HoraFinalMenuCal) < 0 && horaFinalSeleccionadaCal.compareTo(HoraInicioMenuCal) > 0) {
+                    return false;
+                }
+            } catch (ParseException e) {
+                e.printStackTrace();
+                return false;
+            }
+        }
+    }
+
+    return true;
+}
+
     public static void CrearReservacionClientes(ReservacionClientes[] ReservacionClientesArray, Barbero[] barberoArray) {
         boolean comenzar = true;
         String mensajeNombreCliente = "<html><body style='width: 250px; font-family: Arial, sans-serif;'>" + "<h1 style='text-align: center; margin-top: 10px;'>Menú BarberShop</h1>" + "<hr style='border-top: 2px solid #ccc;'>" + "<div style='display: flex; justify-content: center;'>" + "<ul style='list-style-type: none; padding: 0; text-align: left;'>" + "<li style='margin-bottom: 10px;'>Ingrese el nombre del cliente </li>" + "</ul></div></body></html>";
@@ -311,7 +346,10 @@ public class ReservacionClientes {
                 nuevoReservacionClientes.setHoraFinal(horaFinalSeleccionada);
                 nuevoReservacionClientes.setDiaCita(DiaCita);
                 nuevoReservacionClientes.setIdBarbero(IdBarberoSeleccionado);
-
+                if (!ReservacionClientes.ValidarReservaciones(ReservacionClientesArray, DiaCita, IdBarberoSeleccionado, nuevoReservacionClientes)) {
+                    JOptionPane.showMessageDialog(null, "Error: El Horario choca con citas anteriormente agregadas.", "Error", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
                 ReservacionClientesArray[posicion] = nuevoReservacionClientes;
                 posicion = (posicion + 1);
 
