@@ -8,6 +8,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 import javax.swing.JOptionPane;
 
 /**
@@ -231,7 +232,7 @@ public class ReservacionClientes {
                 return;
             }
 
-            String[] options = {"8:00 AM", "9:00 AM", "10:00 AM", "11:00 AM", "12:00 MD", "1:00 PM", "2:00 PM", "3:00 PM", "4:00 PM", "5:00 PM", "6:00 PM"};
+            String[] options = {"8:00 AM", "9:00 AM", "10:00 AM", "11:00 AM", "12:00 PM", "1:00 PM", "2:00 PM", "3:00 PM", "4:00 PM", "5:00 PM", "6:00 PM"};
             String HoraInicioMenu = "";
             String HoraFinalMenu = "";
             for (int z = 0; z < count; z++) {
@@ -271,14 +272,35 @@ public class ReservacionClientes {
                     }
                 }
                 int id = maxId + 1;
+                SimpleDateFormat horaFormato = new SimpleDateFormat("h:mm a", Locale.ENGLISH);
 
-                int comparacionInicio = horaInicioSeleccionada.compareTo(HoraInicioMenu);
-                int comparacionFinal = horaFinalSeleccionada.compareTo(HoraFinalMenu);
+                // Convierte las cadenas de hora seleccionadas en objetos Calendar
+                Calendar horaInicioSeleccionadaCal = Calendar.getInstance();
+                Calendar horaFinalSeleccionadaCal = Calendar.getInstance();
+                Calendar HoraInicioMenuCal = Calendar.getInstance();
+                Calendar HoraFinalMenuCal = Calendar.getInstance();
 
-                if (comparacionInicio >= 0 && comparacionFinal <= 0) {
+                try {
+                    horaInicioSeleccionadaCal.setTime(horaFormato.parse(horaInicioSeleccionada));
+                    horaFinalSeleccionadaCal.setTime(horaFormato.parse(horaFinalSeleccionada));
+                    HoraInicioMenuCal.setTime(horaFormato.parse(HoraInicioMenu));
+                    HoraFinalMenuCal.setTime(horaFormato.parse(HoraFinalMenu));
+                } catch (ParseException e) {
+                    // Manejo de excepciones si ocurre un error al analizar las horas
+                    e.printStackTrace();
+                }
+
+                // Realiza las comparaciones de tiempo utilizando objetos Calendar
+                if ((horaInicioSeleccionadaCal.compareTo(HoraFinalMenuCal) >= 0)
+                        || (horaFinalSeleccionadaCal.compareTo(HoraInicioMenuCal) <= 0)) {
+                    // Las condiciones se invierten para permitir registros fuera del horario de almuerzo
+                    // Mostrar mensaje si la cita cae fuera del horario de almuerzo
+                    // Continuar con el flujo normal si la cita está fuera del horario de almuerzo
+                } else {
                     JOptionPane.showMessageDialog(null, "Error: En este horario almuerza el barbero.", "Error", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
+
                 ReservacionClientes nuevoReservacionClientes = new ReservacionClientes();
                 nuevoReservacionClientes.setid(id);
                 nuevoReservacionClientes.setNombreCliente(NombreCliente);
