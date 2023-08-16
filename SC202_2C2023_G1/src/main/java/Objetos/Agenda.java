@@ -11,10 +11,19 @@ import javax.swing.JOptionPane;
  * @author eria
  */
 public class Agenda {
-    public int id;
-    public int idCliente;
-    public int idBarbero;
+    private int id;
+    private int idCliente;
+    private int idBarbero;
+    private int Corte;
     
+    /*Get and Set del atributo Corte*/
+    public int getCorte() {
+        return Corte;
+    }
+
+    public void setCorte(int Corte) {
+        this.Corte = Corte;
+    }
     
     /*Get and Set del atributo ID*/
     public void setid(int id) {
