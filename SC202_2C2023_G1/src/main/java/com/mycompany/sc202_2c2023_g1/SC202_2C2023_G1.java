@@ -3,7 +3,7 @@ package com.mycompany.sc202_2c2023_g1;
 
 import Objetos.Barbero;
 import Objetos.ReservacionClientes;
-
+import Objetos.Agenda;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import java.awt.Image;
@@ -358,6 +358,7 @@ public class SC202_2C2023_G1 {
     }
 
     public static void SubMenu4(Barbero[] barberoArray, ReservacionClientes[] ReservacionClientesArray) {
+        ReservacionClientes[] agendaArray = new ReservacionClientes[30];
         boolean repetir = true;
         while (repetir) {
             String mensaje = "<html><body style='width: 250px; font-family: Arial, sans-serif;'>" + "<h1 style='text-align: center; margin-top: 10px;'>Menú BarberShop</h1>" + "<hr style='border-top: 2px solid #ccc;'>" + "<div style='display: flex; justify-content: center;'>" + "<ul style='list-style-type: none; padding: 0; text-align: left;'>" + "<li style='margin-bottom: 10px;'><strong>Opción 1:</strong> Mostrar Agenda </li>" + "<li style='margin-bottom: 10px;'><strong>Opción 2:</strong> Atras </li>" + "</ul></div></body></html>";
@@ -378,10 +379,62 @@ public class SC202_2C2023_G1 {
             if (ValidacionNumero(opcion)) {
                 switch (opcion) {
                     case "1":
-                        
-                        
-                        
+                        if (Barbero.hayBarberosAgregados(barberoArray)) {
+
+                            if (ReservacionClientes.hayClientesAgregados(ReservacionClientesArray)) {
+                                String DiaCita = (String) JOptionPane.showInputDialog(null, "Ingrese el dia con el formato (dd/mm/yyyy) de las citas que quiere mostrar", "Menú Reservación de espacios - Mostar Reservacion", JOptionPane.PLAIN_MESSAGE, null, null, null);
+                                boolean esFechaValida = ReservacionClientes.validarFecha(DiaCita, "dd/MM/yyyy");
+                                if (!esFechaValida) {
+                                    String mensajeError = "<html><body style='width: 250px; font-family: Arial, sans-serif;'>"
+                                            + "<h1 style='text-align: center; margin-top: 10px;'>Menú BarberShop</h1>"
+                                            + "<hr style='border-top: 2px solid #ccc;'>"
+                                            + "<div style='display: flex; justify-content: center;'>"
+                                            + "<div style='background-color: #f4e6e6; padding: 20px; border-radius: 5px;'>"
+                                            + "<h3 style='text-align: center; margin-top: 10px; color: #FF0000;'>Error en el registro</h3>"
+                                            + "<p style='text-align: center; margin-top: 10px; color: #333;'>La fecha tiene el formato incorrecto o ingreso un mes actual del que estamos.</p>"
+                                            + "<div style='display: flex; justify-content: center;'>"
+                                            + "</div></div></div></body></html>";
+                                    JOptionPane.showMessageDialog(null, mensajeError);
+                                    return;
+                                }
+
+                                if (DiaCita == null || DiaCita.isEmpty()) {
+                                    JOptionPane.showMessageDialog(null, "Error: El campo es obligatorio.", "Error", JOptionPane.ERROR_MESSAGE);
+                                } else {
+                                    int count = 0;
+                                    for (Barbero barbero : barberoArray) {
+                                        if (barbero != null) {
+                                            count++;
+                                        }
+                                    }
+
+                                    // Crear un array de los nombres de los barberos no nulos
+                                    String[] nombresBarberos = new String[count];
+                                    int x = 0;
+                                    for (Barbero barbero : barberoArray) {
+                                        if (barbero != null) {
+                                            nombresBarberos[x] = barbero.getNombre();
+                                            x++;
+                                        }
+                                    }
+
+                                    int indiceNombreBarbero = JOptionPane.showOptionDialog(null, "Seleccione el nombre del barbero", "Menú de opciones",
+                                            JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null, nombresBarberos, nombresBarberos[0]);
+                                    int IdBarberoSeleccionado = 0;
+
+                                    String nombre = nombresBarberos[indiceNombreBarbero];
+                                    for (int z = 0; z < count; z++) {
+                                        if (nombre == barberoArray[z].getNombre()) {
+                                            IdBarberoSeleccionado = barberoArray[z].getid();
+                                        }
+
+                                    }
+                                    Agenda.mostrarAgendaBarbero(ReservacionClientesArray, DiaCita, barberoArray, IdBarberoSeleccionado);
+                                }
+                            }
+                        }
                         break;
+
                     case "2":
                         repetir = false;
                         break;

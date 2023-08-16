@@ -242,7 +242,7 @@ public class ReservacionClientes {
                 }
 
             }
-            JOptionPane.showMessageDialog(null, "Recordar el horario del barbero selecionado es de " + HoraInicioMenu + " a " + HoraFinalMenu);
+            JOptionPane.showMessageDialog(null, "Recordar que la hora de almuerzo del barbero selecionado es de " + HoraInicioMenu + " a " + HoraFinalMenu);
             int indiceHoraInicio = JOptionPane.showOptionDialog(null, "Seleccione la hora inicio de la cita", "Menú de opciones",
                     JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null, options, options[0]);
 
