@@ -11,7 +11,7 @@ import javax.swing.JOptionPane;
 
 /**
  *
- * @author eria
+ * @author eria, kevin, pow
  */
 public class Agenda {
     private int id;
@@ -59,14 +59,23 @@ public class Agenda {
         String reservacionClientesInfo = "";
         boolean reservacionesEncontradas = false;
         double preciototal = 0 ;
-        
+ 
         int count = 0;
         for (Barbero barbero : barberoArray) {
             if (barbero != null) {
                 count++;
             }
         }
-
+        String horaInicioAlmuerzo="";
+        String horaFinalAlmuerzo="";
+        for(int i=0; i<count; i++){
+        if(barberoArray[i].getid()==IdBarberoRecibido){
+           horaInicioAlmuerzo=barberoArray[i].getHoraAlmuerzoInicio();
+           horaFinalAlmuerzo=barberoArray[i].getHoraAlmuerzoFinal();
+        }
+            
+        }
+        
         for (int i = 0; i < ReservacionClientesArray.length; i++) {
             ReservacionClientes reservacionClientes = ReservacionClientesArray[i];
 
@@ -98,7 +107,7 @@ public class Agenda {
                 }
             }
         }
-        
+
 
         if (reservacionesEncontradas) {
             String mensaje = "<html><body style='width: 300px; font-family: Arial, sans-serif;'>"
@@ -108,6 +117,12 @@ public class Agenda {
                     + "<div style='background-color: #e6f4e6; padding: 20px; border-radius: 5px;'>"
                     + "<p style='text-align: left; margin-top: 10px;'>"
                     + reservacionClientesInfo
+                    + "</p>"
+                    + "<p style='text-align: left; margin-top: 10px;'>"
+                    + "El horario de inicio de almuerzo del barbero es " + horaInicioAlmuerzo
+                    + "</p>"
+                    + "<p style='text-align: left; margin-top: 10px;'>"
+                    + "El horario final de almuerzo del barbero es " + horaFinalAlmuerzo
                     + "</p>"
                     + "<p style='text-align: left; margin-top: 10px;'>"
                     + "El precio total es de " + preciototal
