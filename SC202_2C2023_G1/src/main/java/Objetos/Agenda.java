@@ -14,11 +14,12 @@ import javax.swing.JOptionPane;
  * @author eria, kevin, pow
  */
 public class Agenda {
+
     private int id;
     private int idCliente;
     private int idBarbero;
     private int Corte;
-    
+
     /*Get and Set del atributo Corte*/
     public int getCorte() {
         return Corte;
@@ -27,69 +28,72 @@ public class Agenda {
     public void setCorte(int Corte) {
         this.Corte = Corte;
     }
-    
+
     /*Get and Set del atributo ID*/
     public void setid(int id) {
         this.id = id;
     }
-    
+
     public int getid() {
         return id;
     }
-    
-    
+
     /*Get and Set del atributo idCliente*/
     public void setidCliente(int idCliente) {
         this.idCliente = idCliente;
     }
-    
+
     public int getidCliente() {
         return idCliente;
     }
-    
+
     /*Get and Set del atributo idBarbero*/
     public void setidBarbero(int idBarbero) {
         this.idBarbero = idBarbero;
     }
-    
+
     public int getidBarbero() {
         return idBarbero;
     }
+
     public static boolean mostrarAgendaBarbero(ReservacionClientes[] ReservacionClientesArray, String diaCita, Barbero[] barberoArray, int IdBarberoRecibido) {
         String reservacionClientesInfo = "";
         boolean reservacionesEncontradas = false;
-        double preciototal = 0 ;
- 
+        double preciototal = 0;
+
         int count = 0;
         for (Barbero barbero : barberoArray) {
             if (barbero != null) {
                 count++;
             }
         }
-        String horaInicioAlmuerzo="";
-        String horaFinalAlmuerzo="";
-        for(int i=0; i<count; i++){
-        if(barberoArray[i].getid()==IdBarberoRecibido){
-           horaInicioAlmuerzo=barberoArray[i].getHoraAlmuerzoInicio();
-           horaFinalAlmuerzo=barberoArray[i].getHoraAlmuerzoFinal();
+        String horaInicioAlmuerzo = "";
+        String horaFinalAlmuerzo = "";
+        for (int i = 0; i < count; i++) {
+            if (barberoArray[i].getid() == IdBarberoRecibido) {
+                horaInicioAlmuerzo = barberoArray[i].getHoraAlmuerzoInicio();
+                horaFinalAlmuerzo = barberoArray[i].getHoraAlmuerzoFinal();
+            }
+
         }
-            
-        }
-        
+        String excludedHours = "";
+        String[] options = {"8:00 AM", "9:00 AM", "10:00 AM", "11:00 AM", "12:00 PM", "1:00 PM", "2:00 PM", "3:00 PM", "4:00 PM", "5:00 PM", "6:00 PM"};
+        String optionsText = "";
+
         for (int i = 0; i < ReservacionClientesArray.length; i++) {
             ReservacionClientes reservacionClientes = ReservacionClientesArray[i];
 
             if (reservacionClientes != null) {
                 String NombreBarbero = "";
                 for (int x = 0; x < count; x++) {
-                    
+
                     if (barberoArray[x].getid() == reservacionClientes.getIdBarbero()) {
                         NombreBarbero = barberoArray[x].getNombre();
                     }
 
                     if (reservacionClientes != null && reservacionClientes.getDiaCita().equals(diaCita)) {
                         if (reservacionClientes.getIdBarbero() == IdBarberoRecibido) {
-                            
+
                             reservacionesEncontradas = true;
                             reservacionClientesInfo += "ID: " + reservacionClientes.getid() + "<br>";
                             reservacionClientesInfo += "Nombre: " + reservacionClientes.getNombreCliente() + "<br>";
@@ -102,12 +106,25 @@ public class Agenda {
                             reservacionClientesInfo += "Nombre Barbero seleccionado es : " + NombreBarbero + "<br>";
                             reservacionClientesInfo += "------------------<br>";
                             preciototal += PrecioCorte(diaCita);
+                            for (int z = 0; z < options.length; z++) {
+                                if (!excludedHours.contains(options[z])) {
+                                    if (options[z].equals(reservacionClientes.getHoraInicio()) || options[z].equals(reservacionClientes.getHoraFinal()) || options[z].equals(horaInicioAlmuerzo) || options[z].equals(horaFinalAlmuerzo)) {
+                                        excludedHours += options[z] + ", ";
+                                    }
+                                }
+                            }
+
                         }
                     }
                 }
             }
         }
 
+        for (int z = 0; z < options.length; z++) {
+            if (!excludedHours.contains(options[z])) {
+                optionsText += options[z] + ", ";
+            }
+        }
 
         if (reservacionesEncontradas) {
             String mensaje = "<html><body style='width: 300px; font-family: Arial, sans-serif;'>"
@@ -123,6 +140,9 @@ public class Agenda {
                     + "</p>"
                     + "<p style='text-align: left; margin-top: 10px;'>"
                     + "El horario final de almuerzo del barbero es " + horaFinalAlmuerzo
+                    + "<p style='text-align: left; margin-top: 10px;'>"
+                    + "Las horas libres son  " + optionsText
+                    + "</p>"
                     + "</p>"
                     + "<p style='text-align: left; margin-top: 10px;'>"
                     + "El precio total es de " + preciototal
@@ -136,19 +156,19 @@ public class Agenda {
         }
         return true;
     }
-    
-   public static int PrecioCorte(String DiaCita) {
+
+    public static int PrecioCorte(String DiaCita) {
         // Convertir la cadena de fecha a un objeto LocalDate
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         LocalDate fechaCita = LocalDate.parse(DiaCita, formatter);
-        
+
         // Obtener el día de la semana de la fecha de la cita
         DayOfWeek diaSemana = fechaCita.getDayOfWeek();
-        
+
         // Definir los precios para fin de semana y entre semana
         int costoCorteFinDeSemana = 3000;
         int costoCorteEntreSemana = 2500;
-        
+
         // Determinar el precio basado en el día de la semana
         int precioCorte;
         if (diaSemana == DayOfWeek.SATURDAY || diaSemana == DayOfWeek.SUNDAY) {
@@ -156,11 +176,11 @@ public class Agenda {
         } else {
             precioCorte = costoCorteEntreSemana;
         }
-        
+
         // Agregar el 13% de IVA al precio
         double iva = precioCorte * 0.13;
         precioCorte += iva; // Convertir el resultado a entero
-        
+
         return precioCorte;
     }
 }
