@@ -153,12 +153,12 @@ public class Barbero {
         String nombreApellidos = (String) JOptionPane.showInputDialog(null, mensajeApellidos, "Menú Administracion Personal - Nuevo Barbero", JOptionPane.PLAIN_MESSAGE, null, null, null);
         String cedulaBarbero = (String) JOptionPane.showInputDialog(null, mensajeCedula, "Menú Administracion Personal - Nuevo Barbero", JOptionPane.PLAIN_MESSAGE, null, null, null);
         if (cedulaBarbero.length() != 9) {
-            JOptionPane.showMessageDialog(null, "No tiene los digitos suficientes.", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Necesita tener 9 digitos.", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
         String telefonoBarbero = (String) JOptionPane.showInputDialog(null, mensajeTelefono, "Menú Administracion Personal - Nuevo Barbero", JOptionPane.PLAIN_MESSAGE, null, null, null);
         if (telefonoBarbero.length() != 8) {
-            JOptionPane.showMessageDialog(null, "No tiene los digitos suficientes.", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Necesita tener 8 digitos.", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
         String[] options = {"8:00 AM", "9:00 AM", "10:00 AM", "11:00 AM", "12:00 PM", "1:00 PM", "2:00 PM", "3:00 PM", "4:00 PM", "5:00 PM", "6:00 PM"};
