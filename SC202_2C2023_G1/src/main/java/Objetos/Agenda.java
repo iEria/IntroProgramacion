@@ -76,9 +76,9 @@ public class Agenda {
             }
 
         }
-        String excludedHours = "";
-        String[] options = {"8:00 AM", "9:00 AM", "10:00 AM", "11:00 AM", "12:00 PM", "1:00 PM", "2:00 PM", "3:00 PM", "4:00 PM", "5:00 PM", "6:00 PM"};
-        String optionsText = "";
+        String horasquitar = "";
+        String[] optiones = {"8:00 AM", "9:00 AM", "10:00 AM", "11:00 AM", "12:00 PM", "1:00 PM", "2:00 PM", "3:00 PM", "4:00 PM", "5:00 PM", "6:00 PM"};
+        String optionesmostrar = "";
 
         for (int i = 0; i < ReservacionClientesArray.length; i++) {
             ReservacionClientes reservacionClientes = ReservacionClientesArray[i];
@@ -106,10 +106,10 @@ public class Agenda {
                             reservacionClientesInfo += "Nombre Barbero seleccionado es : " + NombreBarbero + "<br>";
                             reservacionClientesInfo += "------------------<br>";
                             preciototal += PrecioCorte(diaCita);
-                            for (int z = 0; z < options.length; z++) {
-                                if (!excludedHours.contains(options[z])) {
-                                    if (options[z].equals(reservacionClientes.getHoraInicio()) || options[z].equals(reservacionClientes.getHoraFinal()) || options[z].equals(horaInicioAlmuerzo) || options[z].equals(horaFinalAlmuerzo)) {
-                                        excludedHours += options[z] + ", ";
+                            for (int z = 0; z < optiones.length; z++) {
+                                if (!horasquitar.contains(optiones[z])) {
+                                    if (optiones[z].equals(reservacionClientes.getHoraInicio()) || optiones[z].equals(reservacionClientes.getHoraFinal()) || optiones[z].equals(horaInicioAlmuerzo) || optiones[z].equals(horaFinalAlmuerzo)) {
+                                        horasquitar += optiones[z] + ", ";
                                     }
                                 }
                             }
@@ -120,9 +120,9 @@ public class Agenda {
             }
         }
 
-        for (int z = 0; z < options.length; z++) {
-            if (!excludedHours.contains(options[z])) {
-                optionsText += options[z] + ", ";
+        for (int z = 0; z < optiones.length; z++) {
+            if (!horasquitar.contains(optiones[z])) {
+                optionesmostrar += optiones[z] + ", ";
             }
         }
 
@@ -141,7 +141,7 @@ public class Agenda {
                     + "<p style='text-align: left; margin-top: 10px;'>"
                     + "El horario final de almuerzo del barbero es " + horaFinalAlmuerzo
                     + "<p style='text-align: left; margin-top: 10px;'>"
-                    + "Las horas libres son  " + optionsText
+                    + "Las horas libres son  " + optionesmostrar
                     + "</p>"
                     + "</p>"
                     + "<p style='text-align: left; margin-top: 10px;'>"
